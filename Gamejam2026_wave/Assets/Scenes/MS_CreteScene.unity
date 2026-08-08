@@ -621,7 +621,7 @@ MonoBehaviour:
   blockMoveSpeed: 5
   minimumDragDistance: 0.1
   maximumBlockWidth: 3
-  dragZoneThickness: 0.7
+  dragZoneThickness: 2
 --- !u!1 &1875996759
 GameObject:
   m_ObjectHideFlags: 0
