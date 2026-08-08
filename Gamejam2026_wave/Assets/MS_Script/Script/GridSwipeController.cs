@@ -15,8 +15,15 @@ public class GridSwipeController : MonoBehaviour
 
 
     [Header("Drag")]
-    [SerializeField] private float minimumDragDistance = 0.1f;
+    //[SerializeField] private float minimumDragDistance = 0.1f;
     [SerializeField] private int maximumBlockWidth = 3;
+    [Tooltip("첫 번째 블록이 생성되기 위해 한 칸의 몇 %를 드래그해야 하는지")]
+    [Range(0f, 1f)]
+    [SerializeField] private float firstBlockThreshold = 0.4f;
+
+    [Tooltip("다음 블록으로 확장되기 위해 다음 칸을 몇 % 들어가야 하는지")]
+    [Range(0f, 1f)]
+    [SerializeField] private float nextBlockThreshold = 0.3f;
 
     [Header("Drag Zone")]
     [SerializeField] private float dragZoneThickness = 0.7f;
@@ -27,8 +34,9 @@ public class GridSwipeController : MonoBehaviour
 
     private bool isDragging = false;
 
-    private int currentWidth = 1;
+    private int currentWidth = 0;
 
+    private int startCellIndex = -1;
 
     // =========================================================
     // 드래그 시작 위치
@@ -255,9 +263,53 @@ public class GridSwipeController : MonoBehaviour
 
         // 실제 드래그 시작 위치 저장
         startWorldPosition =
-            worldPosition;
+    worldPosition;
 
-        currentWidth = 1;
+        currentWidth = 0;
+
+        startCellIndex = -1;
+
+        // 시작한 칸 저장
+        Bounds bounds = gridRenderer.bounds;
+
+        if (currentDragSide == DragSide.Bottom ||
+            currentDragSide == DragSide.Top)
+        {
+            float cellWidth =
+                bounds.size.x / gridSize;
+
+            startCellIndex =
+                Mathf.FloorToInt(
+                    (worldPosition.x - bounds.min.x)
+                    / cellWidth
+                );
+
+            startCellIndex =
+                Mathf.Clamp(
+                    startCellIndex,
+                    0,
+                    gridSize - 1
+                );
+        }
+        else if (currentDragSide == DragSide.Left ||
+                currentDragSide == DragSide.Right)
+        {
+            float cellHeight =
+                bounds.size.y / gridSize;
+
+            startCellIndex =
+                Mathf.FloorToInt(
+                    (worldPosition.y - bounds.min.y)
+                    / cellHeight
+                );
+
+            startCellIndex =
+                Mathf.Clamp(
+                    startCellIndex,
+                    0,
+                    gridSize - 1
+                );
+        }
 
         isDragging = true;
     }
@@ -659,7 +711,7 @@ public class GridSwipeController : MonoBehaviour
     {
         // =========================================================
         // 꼭짓점에서 시작했다면
-        // 실제 마우스 이동 방향으로 Side 결정
+        // 실제 마우스 방향으로 가로 / 세로 결정
         // =========================================================
 
         if (startedFromCorner)
@@ -670,18 +722,16 @@ public class GridSwipeController : MonoBehaviour
         }
 
 
-        // 아직 방향이 결정되지 않았다면
         if (currentDragSide ==
             DragSide.None)
         {
-            currentWidth = 1;
+            currentWidth = 0;
 
             return;
         }
 
 
         float distance;
-
         float cellSize;
 
 
@@ -729,41 +779,347 @@ public class GridSwipeController : MonoBehaviour
 
 
         // =========================================================
-        // 최소 거리
+        // 새로운 블록 크기 계산
         // =========================================================
 
-        if (distance <
-            minimumDragDistance)
-        {
-            currentWidth = 1;
+            currentWidth =
+        GetBlockWidthFromCells(
+            worldPosition
+        );
 
-            return;
+
+        Debug.Log(
+            "Drag Distance : " +
+            distance +
+            " / Cell Size : " +
+            cellSize +
+            " / Width : " +
+            currentWidth
+        );
+    }
+
+    // =========================================================
+    // 실제 칸 침범 비율로 블록 크기 계산
+    // =========================================================
+
+    private int GetBlockWidthFromCells(
+        Vector2 currentWorldPosition)
+    {
+        if (gridRenderer == null)
+            return 0;
+
+        if (currentDragSide == DragSide.None)
+            return 0;
+
+
+        Bounds bounds =
+            gridRenderer.bounds;
+
+
+        // =========================================================
+        // 가로 드래그
+        // Bottom / Top
+        // =========================================================
+
+        if (currentDragSide == DragSide.Bottom ||
+            currentDragSide == DragSide.Top)
+        {
+            float cellSize =
+                bounds.size.x / gridSize;
+
+
+            int startColumn =
+                Mathf.FloorToInt(
+                    (
+                        startWorldPosition.x -
+                        bounds.min.x
+                    ) /
+                    cellSize
+                );
+
+
+            startColumn =
+                Mathf.Clamp(
+                    startColumn,
+                    0,
+                    gridSize - 1
+                );
+
+
+            float dragDelta =
+                currentWorldPosition.x -
+                startWorldPosition.x;
+
+
+            float absDistance =
+                Mathf.Abs(dragDelta);
+
+
+            // =========================================
+            // 첫 칸 생성 조건
+            // 시작점에서 40% 이상 움직여야 함
+            // =========================================
+
+            if (absDistance <
+                cellSize * firstBlockThreshold)
+            {
+                return 0;
+            }
+
+
+            int width = 1;
+
+
+            // =========================================
+            // 오른쪽으로 드래그
+            // =========================================
+
+            if (dragDelta > 0f)
+            {
+                for (int column =
+                        startColumn + 1;
+                     column < gridSize;
+                     column++)
+                {
+                    float cellStart =
+                        bounds.min.x +
+                        column * cellSize;
+
+
+                    float enteredDistance =
+                        currentWorldPosition.x -
+                        cellStart;
+
+
+                    float enteredPercent =
+                        enteredDistance /
+                        cellSize;
+
+
+                    if (enteredPercent >=
+                        nextBlockThreshold)
+                    {
+                        width++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                    if (width >=
+                        maximumBlockWidth)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+            // =========================================
+            // 왼쪽으로 드래그
+            // =========================================
+
+            else if (dragDelta < 0f)
+            {
+                for (int column =
+                        startColumn - 1;
+                     column >= 0;
+                     column--)
+                {
+                    float cellEnd =
+                        bounds.min.x +
+                        (column + 1) *
+                        cellSize;
+
+
+                    float enteredDistance =
+                        cellEnd -
+                        currentWorldPosition.x;
+
+
+                    float enteredPercent =
+                        enteredDistance /
+                        cellSize;
+
+
+                    if (enteredPercent >=
+                        nextBlockThreshold)
+                    {
+                        width++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                    if (width >=
+                        maximumBlockWidth)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+            return Mathf.Clamp(
+                width,
+                0,
+                maximumBlockWidth
+            );
         }
 
 
         // =========================================================
-        // 몇 칸인지 계산
+        // 세로 드래그
+        // Left / Right
         // =========================================================
 
-        int width =
-            Mathf.RoundToInt(
-                distance /
-                cellSize
-            );
+        else
+        {
+            float cellSize =
+                bounds.size.y / gridSize;
 
 
-        width =
-            Mathf.Clamp(
+            int startRow =
+                Mathf.FloorToInt(
+                    (
+                        startWorldPosition.y -
+                        bounds.min.y
+                    ) /
+                    cellSize
+                );
+
+
+            startRow =
+                Mathf.Clamp(
+                    startRow,
+                    0,
+                    gridSize - 1
+                );
+
+
+            float dragDelta =
+                currentWorldPosition.y -
+                startWorldPosition.y;
+
+
+            float absDistance =
+                Mathf.Abs(dragDelta);
+
+
+            // 첫 칸 40%
+            if (absDistance <
+                cellSize * firstBlockThreshold)
+            {
+                return 0;
+            }
+
+
+            int width = 1;
+
+
+            // =========================================
+            // 위로 드래그
+            // =========================================
+
+            if (dragDelta > 0f)
+            {
+                for (int row =
+                        startRow + 1;
+                     row < gridSize;
+                     row++)
+                {
+                    float cellStart =
+                        bounds.min.y +
+                        row * cellSize;
+
+
+                    float enteredDistance =
+                        currentWorldPosition.y -
+                        cellStart;
+
+
+                    float enteredPercent =
+                        enteredDistance /
+                        cellSize;
+
+
+                    if (enteredPercent >=
+                        nextBlockThreshold)
+                    {
+                        width++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                    if (width >=
+                        maximumBlockWidth)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+            // =========================================
+            // 아래로 드래그
+            // =========================================
+
+            else if (dragDelta < 0f)
+            {
+                for (int row =
+                        startRow - 1;
+                     row >= 0;
+                     row--)
+                {
+                    float cellEnd =
+                        bounds.min.y +
+                        (row + 1) *
+                        cellSize;
+
+
+                    float enteredDistance =
+                        cellEnd -
+                        currentWorldPosition.y;
+
+
+                    float enteredPercent =
+                        enteredDistance /
+                        cellSize;
+
+
+                    if (enteredPercent >=
+                        nextBlockThreshold)
+                    {
+                        width++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                    if (width >=
+                        maximumBlockWidth)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+            return Mathf.Clamp(
                 width,
-                1,
+                0,
                 maximumBlockWidth
             );
-
-
-        currentWidth =
-            width;
+        }
     }
-
 
     // =========================================================
     // Drag End
@@ -843,20 +1199,29 @@ public class GridSwipeController : MonoBehaviour
             distance
         );
 
+            currentWidth =
+        GetBlockWidthFromCells(
+            worldPosition
+        );
 
-        if (distance <
-            minimumDragDistance)
+        int width =
+        currentWidth;
+
+
+        // =========================================================
+        // 생성 조건을 만족하지 않았으면 생성하지 않음
+        // =========================================================
+
+        if (width <= 0)
         {
             Debug.Log(
-                "드래그 거리가 너무 짧음"
+                "드래그 길이가 1칸 생성 조건인 " +
+                (firstBlockThreshold * 100f) +
+                "%에 도달하지 않았습니다."
             );
 
             return;
         }
-
-
-        int width =
-            currentWidth;
 
 
         Debug.Log(

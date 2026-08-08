@@ -711,8 +711,9 @@ MonoBehaviour:
   gridSize: 3
   blockPrefab: {fileID: 75728841996466869, guid: 506a59e6f9766064e8fb214edc9d5856, type: 3}
   blockMoveSpeed: 5
-  minimumDragDistance: 0.1
   maximumBlockWidth: 3
+  firstBlockThreshold: 0.4
+  nextBlockThreshold: 0.27
   dragZoneThickness: 2
 --- !u!1 &1875996759
 GameObject:
