@@ -221,8 +221,9 @@ GameObject:
   m_Component:
   - component: {fileID: 627068279}
   - component: {fileID: 627068278}
+  - component: {fileID: 627068280}
   m_Layer: 0
-  m_Name: backgroundMana_0
+  m_Name: BackgroundMana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,6 +304,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &627068280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627068277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1d3a5f7feca3b43b0995f336b039a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManaManager
+  mana: 10
 --- !u!1 &832979860
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +725,7 @@ MonoBehaviour:
   gridSize: 3
   blockPrefab: {fileID: 75728841996466869, guid: 506a59e6f9766064e8fb214edc9d5856, type: 3}
   blockMoveSpeed: 5
+  manaManager: {fileID: 627068280}
   maximumBlockWidth: 3
   firstBlockThreshold: 0.4
   nextBlockThreshold: 0.27

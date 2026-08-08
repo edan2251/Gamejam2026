@@ -13,6 +13,8 @@ public class GridSwipeController : MonoBehaviour
     [SerializeField] private GameObject blockPrefab;
     [SerializeField] private float blockMoveSpeed = 5f;
 
+    [Header("Mana")]
+    [SerializeField] private ManaManager manaManager;
 
     [Header("Drag")]
     //[SerializeField] private float minimumDragDistance = 0.1f;
@@ -1690,6 +1692,33 @@ public class GridSwipeController : MonoBehaviour
                 );
         }
 
+        // =========================================================
+        // Mana 검사 및 소모
+        // =========================================================
+
+        if (manaManager == null)
+        {
+            Debug.LogError(
+                "Mana Manager가 연결되지 않았습니다."
+            );
+
+            return;
+        }
+
+
+        // width = 블록이 차지하는 칸 수
+        int manaCost = width;
+
+
+        // Mana가 부족하면 블록 생성 취소
+        if (!manaManager.UseMana(manaCost))
+        {
+            Debug.Log(
+                "Mana가 부족해서 블록을 생성하지 않습니다."
+            );
+
+            return;
+        }
 
         // =========================================================
         // 생성
