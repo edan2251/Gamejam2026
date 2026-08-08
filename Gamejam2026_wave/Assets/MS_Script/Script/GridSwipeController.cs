@@ -6,21 +6,20 @@ public class GridSwipeController : MonoBehaviour
     [Header("Grid")]
     [SerializeField] private Transform grid;
     [SerializeField] private SpriteRenderer gridRenderer;
-
     [SerializeField] private int gridSize = 3;
 
 
     [Header("Block")]
     [SerializeField] private GameObject blockPrefab;
-
     [SerializeField] private float blockMoveSpeed = 5f;
 
 
     [Header("Drag")]
     [SerializeField] private float minimumDragDistance = 0.1f;
-
     [SerializeField] private int maximumBlockWidth = 3;
 
+    [Header("Drag Zone")]
+    [SerializeField] private float dragZoneThickness = 0.7f;
 
     private Camera mainCamera;
 
@@ -31,17 +30,45 @@ public class GridSwipeController : MonoBehaviour
     private int currentWidth = 1;
 
 
+    // =========================================================
+    // 드래그 시작 위치
+    // =========================================================
+
+    private enum DragSide
+    {
+        None,
+        Bottom,
+        Top,
+        Left,
+        Right
+    }
+
+    private DragSide currentDragSide = DragSide.None;
+
+
+    // =========================================================
+    // Awake
+    // =========================================================
+
     private void Awake()
     {
         mainCamera = Camera.main;
     }
 
 
+    // =========================================================
+    // Update
+    // =========================================================
+
     private void Update()
     {
         HandleMouse();
     }
 
+
+    // =========================================================
+    // Mouse
+    // =========================================================
 
     private void HandleMouse()
     {
@@ -104,7 +131,8 @@ public class GridSwipeController : MonoBehaviour
     // Screen → World
     // =========================================================
 
-    private Vector2 ScreenToWorld(Vector2 screenPosition)
+    private Vector2 ScreenToWorld(
+        Vector2 screenPosition)
     {
         Vector3 world =
             mainCamera.ScreenToWorldPoint(
@@ -128,54 +156,246 @@ public class GridSwipeController : MonoBehaviour
     // Drag Start
     // =========================================================
 
-    //private void BeginDrag(Vector2 worldPosition)
-    //{
-    //    // 반드시 Grid 아래쪽에서 시작
-    //    if (!IsBelowGrid(worldPosition))
-    //    {
-    //        return;
-    //    }
-
-
-    //    startWorldPosition =
-    //        worldPosition;
-
-    //    currentWidth = 1;
-
-    //    isDragging = true;
-    //}
-
-    private void BeginDrag(Vector2 worldPosition)
+    private void BeginDrag(
+        Vector2 worldPosition)
     {
         Debug.Log("드래그 시작");
 
-        if (!IsBelowGrid(worldPosition))
+
+        currentDragSide =
+            GetDragSide(worldPosition);
+
+
+        if (currentDragSide ==
+            DragSide.None)
         {
-            Debug.Log("Grid 아래가 아님");
+            Debug.Log(
+                "Grid 주변에서 시작하지 않았습니다."
+            );
+
             return;
         }
 
-        Debug.Log("Grid 아래에서 드래그 시작");
 
-        startWorldPosition = worldPosition;
+        Debug.Log(
+            "드래그 시작 위치 : " +
+            currentDragSide
+        );
+
+
+        startWorldPosition =
+            worldPosition;
+
 
         currentWidth = 1;
 
         isDragging = true;
     }
 
+
+    // =========================================================
+    // Grid 어느 방향에서 시작했는지
+    // =========================================================
+
+    private DragSide GetDragSide(
+    Vector2 worldPosition)
+    {
+        if (gridRenderer == null)
+        {
+            Debug.LogError(
+                "Grid Renderer가 연결되어 있지 않습니다."
+            );
+
+            return DragSide.None;
+        }
+
+        Bounds bounds =
+            gridRenderer.bounds;
+
+
+        // =========================================
+        // 각 경계와의 거리
+        // =========================================
+
+        float distanceBottom =
+            Mathf.Abs(
+                worldPosition.y -
+                bounds.min.y
+            );
+
+        float distanceTop =
+            Mathf.Abs(
+                worldPosition.y -
+                bounds.max.y
+            );
+
+        float distanceLeft =
+            Mathf.Abs(
+                worldPosition.x -
+                bounds.min.x
+            );
+
+        float distanceRight =
+            Mathf.Abs(
+                worldPosition.x -
+                bounds.max.x
+            );
+
+
+        // =========================================
+        // Grid 범위 + 바깥쪽 Drag Zone
+        // =========================================
+
+        bool insideHorizontalRange =
+            worldPosition.x >=
+                bounds.min.x - dragZoneThickness &&
+            worldPosition.x <=
+                bounds.max.x + dragZoneThickness;
+
+        bool insideVerticalRange =
+            worldPosition.y >=
+                bounds.min.y - dragZoneThickness &&
+            worldPosition.y <=
+                bounds.max.y + dragZoneThickness;
+
+
+        // =========================================
+        // 각 방향의 드래그 영역
+        // =========================================
+
+        bool canBottom =
+            insideHorizontalRange &&
+            distanceBottom <= dragZoneThickness;
+
+        bool canTop =
+            insideHorizontalRange &&
+            distanceTop <= dragZoneThickness;
+
+        bool canLeft =
+            insideVerticalRange &&
+            distanceLeft <= dragZoneThickness;
+
+        bool canRight =
+            insideVerticalRange &&
+            distanceRight <= dragZoneThickness;
+
+
+        // 어디에도 속하지 않음
+        if (!canBottom &&
+            !canTop &&
+            !canLeft &&
+            !canRight)
+        {
+            return DragSide.None;
+        }
+
+
+        // =========================================
+        // 여러 영역이 겹치면
+        // 가장 가까운 Grid 경계 선택
+        // =========================================
+
+        float closestDistance =
+            float.MaxValue;
+
+        DragSide closestSide =
+            DragSide.None;
+
+
+        if (canBottom &&
+            distanceBottom < closestDistance)
+        {
+            closestDistance =
+                distanceBottom;
+
+            closestSide =
+                DragSide.Bottom;
+        }
+
+
+        if (canTop &&
+            distanceTop < closestDistance)
+        {
+            closestDistance =
+                distanceTop;
+
+            closestSide =
+                DragSide.Top;
+        }
+
+
+        if (canLeft &&
+            distanceLeft < closestDistance)
+        {
+            closestDistance =
+                distanceLeft;
+
+            closestSide =
+                DragSide.Left;
+        }
+
+
+        if (canRight &&
+            distanceRight < closestDistance)
+        {
+            closestDistance =
+                distanceRight;
+
+            closestSide =
+                DragSide.Right;
+        }
+
+
+        return closestSide;
+    }
+
+
     // =========================================================
     // Drag Update
     // =========================================================
 
-    private void UpdateDrag(Vector2 worldPosition)
+    private void UpdateDrag(
+        Vector2 worldPosition)
     {
-        float distance =
-            Mathf.Abs(
-                worldPosition.x -
-                startWorldPosition.x
-            );
+        float distance;
 
+
+        // =========================================
+        // 위 / 아래에서 시작
+        // → 가로 드래그
+        // =========================================
+
+        if (currentDragSide ==
+            DragSide.Bottom ||
+            currentDragSide ==
+            DragSide.Top)
+        {
+            distance =
+                Mathf.Abs(
+                    worldPosition.x -
+                    startWorldPosition.x
+                );
+        }
+
+
+        // =========================================
+        // 왼쪽 / 오른쪽에서 시작
+        // → 세로 드래그
+        // =========================================
+
+        else
+        {
+            distance =
+                Mathf.Abs(
+                    worldPosition.y -
+                    startWorldPosition.y
+                );
+        }
+
+
+        // =========================================
+        // 최소 드래그 거리
+        // =========================================
 
         if (distance <
             minimumDragDistance)
@@ -186,14 +406,22 @@ public class GridSwipeController : MonoBehaviour
         }
 
 
-        // Grid 한 칸의 실제 월드 크기
-        float cellWidth =
+        // =========================================
+        // Grid 한 칸 크기
+        // =========================================
+
+        float cellSize =
             GetCellWidth();
 
 
+        // =========================================
+        // 몇 칸 드래그했는지
+        // =========================================
+
         int width =
             Mathf.RoundToInt(
-                distance / cellWidth
+                distance /
+                cellSize
             );
 
 
@@ -214,93 +442,140 @@ public class GridSwipeController : MonoBehaviour
     // Drag End
     // =========================================================
 
-    //private void EndDrag(Vector2 worldPosition)
-    //{
-    //    if (!isDragging)
-    //        return;
-
-    //    isDragging = false;
-
-
-    //    float distance =
-    //        Mathf.Abs(
-    //            worldPosition.x -
-    //            startWorldPosition.x
-    //        );
-
-
-    //    if (distance <
-    //        minimumDragDistance)
-    //    {
-    //        return;
-    //    }
-
-
-    //    int width =
-    //        currentWidth;
-
-
-    //    float direction =
-    //        Mathf.Sign(
-    //            worldPosition.x -
-    //            startWorldPosition.x
-    //        );
-
-
-    //    if (direction == 0)
-    //        direction = 1;
-
-
-    //    CreateBlock(width, direction);
-    //}
-
-    private void EndDrag(Vector2 worldPosition)
+    private void EndDrag(
+        Vector2 worldPosition)
     {
         Debug.Log("드래그 종료");
+
 
         if (!isDragging)
             return;
 
+
         isDragging = false;
 
-        float distance =
-            Mathf.Abs(
-                worldPosition.x -
-                startWorldPosition.x
-            );
+
+        float distance;
+
+
+        // =========================================
+        // 위 / 아래
+        // =========================================
+
+        if (currentDragSide ==
+            DragSide.Bottom ||
+            currentDragSide ==
+            DragSide.Top)
+        {
+            distance =
+                Mathf.Abs(
+                    worldPosition.x -
+                    startWorldPosition.x
+                );
+        }
+
+
+        // =========================================
+        // 왼쪽 / 오른쪽
+        // =========================================
+
+        else
+        {
+            distance =
+                Mathf.Abs(
+                    worldPosition.y -
+                    startWorldPosition.y
+                );
+        }
+
 
         Debug.Log(
             "드래그 거리 : " +
             distance
         );
 
-        if (distance < minimumDragDistance)
+
+        if (distance <
+            minimumDragDistance)
         {
-            Debug.Log("드래그 거리가 너무 짧음");
+            Debug.Log(
+                "드래그 거리가 너무 짧음"
+            );
+
             return;
         }
 
+
         int width =
             currentWidth;
+
 
         Debug.Log(
             "생성할 블록 크기 : " +
             width
         );
 
-        // 드래그 방향 계산
-        float direction =
-            Mathf.Sign(
-                worldPosition.x -
-                startWorldPosition.x
-            );
 
-        if (direction == 0)
-            direction = 1;
+        // =========================================
+        // 블록 이동 방향 결정
+        // =========================================
 
-        CreateBlock(width, direction);
+        Vector2 moveDirection;
+
+
+        switch (currentDragSide)
+        {
+            // 아래에서 시작
+            // → 위로 이동
+            case DragSide.Bottom:
+
+                moveDirection =
+                    Vector2.up;
+
+                break;
+
+
+            // 위에서 시작
+            // → 아래로 이동
+            case DragSide.Top:
+
+                moveDirection =
+                    Vector2.down;
+
+                break;
+
+
+            // 왼쪽에서 시작
+            // → 오른쪽으로 이동
+            case DragSide.Left:
+
+                moveDirection =
+                    Vector2.right;
+
+                break;
+
+
+            // 오른쪽에서 시작
+            // → 왼쪽으로 이동
+            case DragSide.Right:
+
+                moveDirection =
+                    Vector2.left;
+
+                break;
+
+
+            default:
+
+                return;
+        }
+
+
+        CreateBlock(
+            width,
+            moveDirection
+        );
     }
-
 
 
     // =========================================================
@@ -308,8 +583,8 @@ public class GridSwipeController : MonoBehaviour
     // =========================================================
 
     private void CreateBlock(
-    int width,
-    float direction)
+        int width,
+        Vector2 moveDirection)
     {
         if (blockPrefab == null)
         {
@@ -321,9 +596,14 @@ public class GridSwipeController : MonoBehaviour
         }
 
 
-        // =========================================
-        // 드래그 방향
-        // =========================================
+        if (gridRenderer == null)
+        {
+            Debug.LogError(
+                "Grid Renderer가 연결되지 않았습니다."
+            );
+
+            return;
+        }
 
 
         // =========================================
@@ -345,7 +625,7 @@ public class GridSwipeController : MonoBehaviour
 
 
         // =========================================
-        // 시작한 열
+        // 시작한 위치
         // =========================================
 
         float relativeX =
@@ -353,10 +633,22 @@ public class GridSwipeController : MonoBehaviour
             gridBounds.min.x;
 
 
+        float relativeY =
+            startWorldPosition.y -
+            gridBounds.min.y;
+
+
         int startColumn =
             Mathf.FloorToInt(
                 relativeX /
                 cellWidth
+            );
+
+
+        int startRow =
+            Mathf.FloorToInt(
+                relativeY /
+                cellHeight
             );
 
 
@@ -368,84 +660,148 @@ public class GridSwipeController : MonoBehaviour
             );
 
 
+        startRow =
+            Mathf.Clamp(
+                startRow,
+                0,
+                gridSize - 1
+            );
+
+
         // =========================================
-        // 방향에 따른 왼쪽 열
+        // 블록 방향
         // =========================================
 
-        int leftColumn;
+        bool horizontal =
+            moveDirection == Vector2.up ||
+            moveDirection == Vector2.down;
 
 
-        if (direction > 0)
+        // =========================================
+        // 블록 크기
+        // =========================================
+
+        Vector3 blockScale;
+
+
+        if (horizontal)
         {
-            leftColumn =
-                startColumn;
+            // 아래 / 위에서 생성
+            // 가로로 긴 블록
+
+            blockScale =
+                new Vector3(
+                    width,
+                    1f,
+                    1f
+                );
         }
         else
         {
-            leftColumn =
-                startColumn -
-                width +
-                1;
+            // 왼쪽 / 오른쪽에서 생성
+            // 세로로 긴 블록
+
+            blockScale =
+                new Vector3(
+                    1f,
+                    width,
+                    1f
+                );
         }
 
 
         // =========================================
-        // 범위 보정
-        // =========================================
-
-        width =
-            Mathf.Clamp(
-                width,
-                1,
-                gridSize
-            );
-
-
-        leftColumn =
-            Mathf.Clamp(
-                leftColumn,
-                0,
-                gridSize - width
-            );
-
-
-        // =========================================
-        // Block 크기
-        // =========================================
-
-        Vector3 blockScale =
-            new Vector3(
-                width,
-                1f,
-                1f
-            );
-
-
-        // =========================================
-        // Block 중심
+        // 블록 중심 위치
         // =========================================
 
         float blockX =
             gridBounds.min.x +
-            (leftColumn * cellWidth) +
-            (width * cellWidth / 2f);
+            (startColumn * cellWidth) +
+            (horizontal
+                ? width * cellWidth / 2f
+                : cellWidth / 2f);
 
-
-        // =========================================
-        // Grid 아래쪽에서 생성
-        // =========================================
 
         float blockY =
-            gridBounds.min.y -
-            cellHeight;
+            gridBounds.min.y +
+            (startRow * cellHeight) +
+            (!horizontal
+                ? width * cellHeight / 2f
+                : cellHeight / 2f);
 
 
-        Vector3 spawnPosition =
-            new Vector3(
-                blockX,
-                blockY,
-                0f
-            );
+        // =========================================
+        // 생성 위치
+        // =========================================
+
+        Vector3 spawnPosition;
+
+
+        // =========================================
+        // 아래 → 위
+        // =========================================
+
+        if (moveDirection ==
+            Vector2.up)
+        {
+            spawnPosition =
+                new Vector3(
+                    blockX,
+                    gridBounds.min.y -
+                    cellHeight,
+                    0f
+                );
+        }
+
+
+        // =========================================
+        // 위 → 아래
+        // =========================================
+
+        else if (moveDirection ==
+                 Vector2.down)
+        {
+            spawnPosition =
+                new Vector3(
+                    blockX,
+                    gridBounds.max.y +
+                    cellHeight,
+                    0f
+                );
+        }
+
+
+        // =========================================
+        // 왼쪽 → 오른쪽
+        // =========================================
+
+        else if (moveDirection ==
+                 Vector2.right)
+        {
+            spawnPosition =
+                new Vector3(
+                    gridBounds.min.x -
+                    cellWidth,
+                    blockY,
+                    0f
+                );
+        }
+
+
+        // =========================================
+        // 오른쪽 → 왼쪽
+        // =========================================
+
+        else
+        {
+            spawnPosition =
+                new Vector3(
+                    gridBounds.max.x +
+                    cellWidth,
+                    blockY,
+                    0f
+                );
+        }
 
 
         // =========================================
@@ -465,28 +821,35 @@ public class GridSwipeController : MonoBehaviour
         // =========================================
 
         block.transform.localScale =
-            new Vector3(
-                width,
-                1f,
-                1f
-            );
+            blockScale;
 
 
-        // 이동 속도 설정
+        // =========================================
+        // 이동 방향 설정
+        // =========================================
+
         MovingBlock movingBlock =
             block.GetComponent<MovingBlock>();
 
 
         if (movingBlock != null)
         {
-            // Inspector에서 기본값을 사용
+            movingBlock.SetMoveDirection(
+                moveDirection
+            );
+
+            movingBlock.SetMoveSpeed(
+                blockMoveSpeed
+            );
         }
 
 
         Debug.Log(
             "블록 생성 : " +
             width +
-            " x 1"
+            " x 1" +
+            " / 방향 : " +
+            moveDirection
         );
     }
 

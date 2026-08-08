@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 359259540}
   - component: {fileID: 359259539}
   m_Layer: 0
-  m_Name: Sprite-0003_0
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 1133030426}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 9.0832, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -621,6 +621,7 @@ MonoBehaviour:
   blockMoveSpeed: 5
   minimumDragDistance: 0.1
   maximumBlockWidth: 3
+  dragZoneThickness: 0.7
 --- !u!1 &1875996759
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +755,7 @@ Transform:
   m_GameObject: {fileID: 1875996759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6, z: 0}
+  m_LocalPosition: {x: 0, y: -15, z: 0}
   m_LocalScale: {x: 9.0832, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -893,7 +894,7 @@ Transform:
   m_GameObject: {fileID: 1967557897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: -15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 14.5807, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1032,7 +1033,7 @@ Transform:
   m_GameObject: {fileID: 2134078394}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: 0}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 14.5807, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

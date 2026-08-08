@@ -7,26 +7,65 @@ public class MovingBlock : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private Vector2 moveDirection = Vector2.up;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+
     private void FixedUpdate()
     {
-        // 계속 위쪽으로 이동
         rb.MovePosition(
             rb.position +
-            Vector2.up * moveSpeed * Time.fixedDeltaTime
+            moveDirection *
+            moveSpeed *
+            Time.fixedDeltaTime
         );
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+
+    // =========================================================
+    // 이동 방향 설정
+    // =========================================================
+
+    public void SetMoveDirection(
+        Vector2 direction)
     {
-        // Trigger를 만나면 삭제
-        if (other.CompareTag("BlockDestroyTrigger"))
+        if (direction.sqrMagnitude <= 0f)
+            return;
+
+        moveDirection =
+            direction.normalized;
+    }
+
+
+    // =========================================================
+    // 이동 속도 설정
+    // =========================================================
+
+    public void SetMoveSpeed(
+        float speed)
+    {
+        moveSpeed = speed;
+    }
+
+
+    // =========================================================
+    // Trigger
+    // =========================================================
+
+    private void OnTriggerEnter2D(
+        Collider2D other)
+    {
+        if (other.CompareTag(
+            "BlockDestroyTrigger"))
         {
-            Debug.Log("빨간 블록이 Trigger에 들어왔습니다!");
+            Debug.Log(
+                "블록이 Trigger에 들어왔습니다!"
+            );
 
             Destroy(gameObject);
         }
