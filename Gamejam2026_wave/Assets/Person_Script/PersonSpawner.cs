@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static PersonSpawner;
 using static UnityEngine.GraphicsBuffer;
+using System.Collections;
 
 public enum SpawnDirection
 {
@@ -28,12 +29,28 @@ public class PersonSpawner : MonoBehaviour
     [Header("Direction")]
     [SerializeField] private SpawnDirection spawnDirection;
 
+    [Header("Spawn Time")]
+    [SerializeField] private float minSpawnTime = 1f;
+    [SerializeField] private float maxSpawnTime = 3f;
 
 
-    private void Update()
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        StartCoroutine(SpawnRoutine());
+    }
+
+    private IEnumerator SpawnRoutine()
+    {
+        while (true)
         {
+            float spawnTime = Random.Range(
+                minSpawnTime,
+                maxSpawnTime
+            );
+
+            yield return new WaitForSeconds(spawnTime);
+
             SpawnPerson();
         }
     }
