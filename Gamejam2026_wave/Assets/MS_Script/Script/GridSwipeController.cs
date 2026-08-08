@@ -4,199 +4,659 @@ using System.Collections;
 
 public class GridSwipeController : MonoBehaviour
 {
-    [Header("Grid")]
+    [Header("========================================")]
+    [Header("GRID")]
+    [Header("========================================")]
+
     [SerializeField] private RectTransform gridRect;
+
     [SerializeField] private int gridSize = 3;
 
-    [Header("Square")]
+
+    [Header("========================================")]
+    [Header("BLOCK")]
+    [Header("========================================")]
+
     [SerializeField] private RectTransform squarePrefab;
 
-    [Header("Movement")]
     [SerializeField] private float moveDuration = 0.5f;
 
-    [Header("Swipe")]
-    [SerializeField] private float minimumSwipeDistance = 20f;
 
-    // 입력 시작 위치
-    private Vector2 startInputPosition;
+    [Header("========================================")]
+    [Header("DRAG")]
+    [Header("========================================")]
 
-    // 입력 중인지
-    private bool isInputting;
+    [SerializeField] private float minimumDragDistance = 10f;
 
-    // 그리드 아래에서 시작했는지
-    private bool validSwipe;
+    // 최대 생성 가능한 가로 칸 수
+    [SerializeField] private int maximumBlockWidth = 3;
+
+
+    [Header("========================================")]
+    [Header("SPAWN")]
+    [Header("========================================")]
+
+    // 그리드 아래쪽에서 시작해야 하는가?
+    [SerializeField] private bool mustStartBelowGrid = true;
+
+    // 그리드 아래쪽으로부터 얼마까지 허용할 것인지
+    [SerializeField] private float spawnAreaHeight = 1000f;
+
+
+    [Header("========================================")]
+    [Header("GUIDE")]
+    [Header("========================================")]
+
+    // 드래그 중 나타나는 빨간색 가이드
+    [SerializeField] private Image guideImage;
+
+    [SerializeField]
+    private Color guideColor =
+        new Color(1f, 0f, 0f, 0.5f);
+
+
+    // Canvas
+    private RectTransform canvasRect;
+
+
+    // 입력
+    private Vector2 startScreenPosition;
+    private Vector2 currentScreenPosition;
+
+    private bool isDragging = false;
+    private bool validDrag = false;
+
+
+    // 현재 가이드가 차지하고 있는 칸 수
+    private int currentWidth = 1;
+
+
+    private void Awake()
+    {
+        // Canvas 찾기
+        Canvas canvas = GetComponentInParent<Canvas>();
+
+        if (canvas != null)
+        {
+            canvasRect = canvas.GetComponent<RectTransform>();
+        }
+
+
+        // 가이드가 없으면 자동 생성
+        if (guideImage == null)
+        {
+            CreateGuide();
+        }
+
+
+        HideGuide();
+    }
 
 
     private void Update()
     {
-        // 모바일
+        // 모바일 터치
         if (Input.touchCount > 0)
         {
             HandleTouch();
         }
-        // PC 마우스
         else
         {
+            // PC 마우스
             HandleMouse();
         }
     }
 
 
     // =========================================================
-    // 모바일 터치
+    // MOUSE
+    // =========================================================
+
+    private void HandleMouse()
+    {
+        // 마우스 누름
+        if (Input.GetMouseButtonDown(0))
+        {
+            BeginDrag(Input.mousePosition);
+        }
+
+
+        // 마우스 드래그 중
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            UpdateDrag(Input.mousePosition);
+        }
+
+
+        // 마우스 뗌
+        if (Input.GetMouseButtonUp(0))
+        {
+            EndDrag(Input.mousePosition);
+        }
+    }
+
+
+    // =========================================================
+    // TOUCH
     // =========================================================
 
     private void HandleTouch()
     {
         Touch touch = Input.GetTouch(0);
 
-        // 손가락을 화면에 처음 댐
+
+        // 터치 시작
         if (touch.phase == TouchPhase.Began)
         {
-            startInputPosition = touch.position;
-
-            isInputting = true;
-
-            validSwipe = IsBelowGrid(startInputPosition);
+            BeginDrag(touch.position);
         }
 
-        // 손가락을 뗌
-        if (touch.phase == TouchPhase.Ended)
+
+        // 터치 이동
+        if (
+            touch.phase == TouchPhase.Moved ||
+            touch.phase == TouchPhase.Stationary
+        )
         {
-            if (isInputting && validSwipe)
+            if (isDragging)
             {
-                ProcessSwipe(
-                    startInputPosition,
-                    touch.position
-                );
+                UpdateDrag(touch.position);
             }
+        }
 
-            isInputting = false;
-            validSwipe = false;
+
+        // 터치 종료
+        if (
+            touch.phase == TouchPhase.Ended ||
+            touch.phase == TouchPhase.Canceled
+        )
+        {
+            EndDrag(touch.position);
         }
     }
 
 
     // =========================================================
-    // PC 마우스
+    // DRAG START
     // =========================================================
 
-    private void HandleMouse()
+    private void BeginDrag(Vector2 screenPosition)
     {
-        // 마우스 버튼 누름
-        if (Input.GetMouseButtonDown(0))
+        // 이미 드래그 중이면 무시
+        if (isDragging)
+            return;
+
+
+        // 그리드 바깥에서 시작했는지 확인
+        validDrag = IsValidStartPosition(screenPosition);
+
+
+        if (!validDrag)
         {
-            startInputPosition = Input.mousePosition;
-
-            isInputting = true;
-
-            validSwipe = IsBelowGrid(startInputPosition);
-        }
-
-        // 마우스 버튼 뗌
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (isInputting && validSwipe)
-            {
-                ProcessSwipe(
-                    startInputPosition,
-                    Input.mousePosition
-                );
-            }
-
-            isInputting = false;
-            validSwipe = false;
-        }
-    }
-
-
-    // =========================================================
-    // 그리드 아래쪽에서 시작했는지 확인
-    // =========================================================
-
-    private bool IsBelowGrid(Vector2 screenPosition)
-    {
-        Vector3[] corners = new Vector3[4];
-
-        gridRect.GetWorldCorners(corners);
-
-        // 왼쪽 아래
-        Vector3 bottomLeft = corners[0];
-
-        // 오른쪽 아래
-        Vector3 bottomRight = corners[3];
-
-        float bottom = bottomLeft.y;
-
-        float left = bottomLeft.x;
-        float right = bottomRight.x;
-
-        // 그리드 바로 아래 + 그리드의 가로 범위에서 시작해야 함
-        bool isBelow = screenPosition.y < bottom;
-
-        bool isInsideHorizontal =
-            screenPosition.x >= left &&
-            screenPosition.x <= right;
-
-        return isBelow && isInsideHorizontal;
-    }
-
-
-    // =========================================================
-    // 스와이프 계산
-    // =========================================================
-
-    private void ProcessSwipe(
-        Vector2 start,
-        Vector2 end)
-    {
-        Vector2 difference = end - start;
-
-        // 너무 짧은 움직임 무시
-        if (difference.magnitude < minimumSwipeDistance)
-        {
-            Debug.Log("스와이프 거리가 너무 짧습니다.");
+            Debug.Log("그리드 바깥의 유효한 영역에서 시작해주세요.");
             return;
         }
 
-        // 가로 스와이프만 허용
-        if (Mathf.Abs(difference.x) < Mathf.Abs(difference.y))
+
+        startScreenPosition = screenPosition;
+        currentScreenPosition = screenPosition;
+
+        currentWidth = 1;
+
+        isDragging = true;
+
+
+        // 처음부터 1칸 가이드 표시
+        UpdateGuide(screenPosition);
+    }
+
+
+    // =========================================================
+    // DRAG UPDATE
+    // =========================================================
+
+    private void UpdateDrag(Vector2 screenPosition)
+    {
+        if (!isDragging)
+            return;
+
+        currentScreenPosition = screenPosition;
+
+        Vector2 dragDelta =
+            screenPosition - startScreenPosition;
+
+        float horizontalDistance =
+            Mathf.Abs(dragDelta.x);
+
+        // 너무 조금 움직였으면 1칸
+        if (horizontalDistance < minimumDragDistance)
         {
-            Debug.Log("세로 스와이프는 무시합니다.");
+            currentWidth = 1;
+
+            UpdateGuide(screenPosition);
+
             return;
         }
 
-        // 한 칸의 크기
+        // 한 칸의 실제 화면 크기
         float cellWidth =
-            gridRect.rect.width / gridSize;
+            GetCellWidthInScreen();
 
-        // 몇 칸을 이동했는지 계산
-        int draggedCells = Mathf.RoundToInt(
-            Mathf.Abs(difference.x) / cellWidth
+        // =========================================
+        // 드래그한 거리 → 칸 수
+        // =========================================
+
+        int width = Mathf.RoundToInt(
+            horizontalDistance / cellWidth
         );
 
         // 최소 1칸
-        draggedCells = Mathf.Max(1, draggedCells);
+        width = Mathf.Max(1, width);
 
-        // 최대 그리드 크기
-        draggedCells = Mathf.Min(
-            gridSize,
-            draggedCells
+        // 최대 3칸
+        width = Mathf.Min(
+            maximumBlockWidth,
+            width
         );
 
-        Debug.Log(
-            "스와이프한 칸 수 : " + draggedCells
-        );
+        currentWidth = width;
 
-        CreateSquare(draggedCells);
+        // 가이드 갱신
+        UpdateGuide(screenPosition);
     }
 
 
     // =========================================================
-    // 네모 생성
+    // DRAG END
     // =========================================================
 
-    private void CreateSquare(int size)
+    private void EndDrag(Vector2 screenPosition)
+    {
+        if (!isDragging)
+            return;
+
+
+        isDragging = false;
+
+
+        HideGuide();
+
+
+        if (!validDrag)
+        {
+            validDrag = false;
+            return;
+        }
+
+
+        Vector2 dragDelta =
+            screenPosition - startScreenPosition;
+
+
+        float distance =
+            Mathf.Abs(dragDelta.x);
+
+
+        // 너무 짧게 움직이면 생성하지 않음
+        if (distance < minimumDragDistance)
+        {
+            validDrag = false;
+            return;
+        }
+
+
+        // 현재 계산된 크기로 생성
+        int width = currentWidth;
+
+
+        Debug.Log(
+            "블록 생성 : " +
+            width +
+            " x 1"
+        );
+
+
+        CreateBlock(width);
+
+
+        validDrag = false;
+    }
+
+
+    // =========================================================
+    // VALID START
+    // =========================================================
+
+    private bool IsValidStartPosition(
+        Vector2 screenPosition)
+    {
+        if (gridRect == null)
+            return false;
+
+
+        Vector2 localPoint;
+
+
+        bool success =
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                gridRect,
+                screenPosition,
+                GetUICamera(),
+                out localPoint
+            );
+
+
+        if (!success)
+            return false;
+
+
+        Rect rect = gridRect.rect;
+
+
+        // 그리드 내부
+        bool insideGrid =
+            rect.Contains(localPoint);
+
+
+        if (insideGrid)
+            return false;
+
+
+        // 그리드 아래쪽인지
+        if (mustStartBelowGrid)
+        {
+            if (localPoint.y >= rect.yMin)
+            {
+                return false;
+            }
+
+
+            // 너무 멀리 떨어진 곳은 무시
+            float distanceBelow =
+                rect.yMin - localPoint.y;
+
+
+            if (distanceBelow > spawnAreaHeight)
+            {
+                return false;
+            }
+        }
+
+
+        // 여기까지 왔다면 유효
+        return true;
+    }
+
+
+    // =========================================================
+    // GUIDE CREATE
+    // =========================================================
+
+    private void CreateGuide()
+    {
+        if (canvasRect == null)
+        {
+            Debug.LogError(
+                "Canvas를 찾을 수 없습니다."
+            );
+
+            return;
+        }
+
+
+        GameObject guideObject =
+            new GameObject(
+                "SwipeGuide"
+            );
+
+
+        guideObject.transform.SetParent(
+            canvasRect,
+            false
+        );
+
+
+        guideImage =
+            guideObject.AddComponent<Image>();
+
+
+        guideImage.color =
+            guideColor;
+
+
+        RectTransform rect =
+            guideObject.GetComponent<RectTransform>();
+
+
+        rect.anchorMin =
+            new Vector2(0.5f, 0.5f);
+
+
+        rect.anchorMax =
+            new Vector2(0.5f, 0.5f);
+
+
+        rect.pivot =
+            new Vector2(0.5f, 0.5f);
+
+
+        rect.sizeDelta =
+            Vector2.zero;
+    }
+
+
+    // =========================================================
+    // GUIDE UPDATE
+    // =========================================================
+
+    private void UpdateGuide(Vector2 screenPosition)
+    {
+        if (guideImage == null)
+            return;
+
+        RectTransform guideRect =
+            guideImage.rectTransform;
+
+        // =========================================
+        // 드래그 방향
+        // =========================================
+
+        float direction =
+            Mathf.Sign(
+                screenPosition.x -
+                startScreenPosition.x
+            );
+
+        // 아직 움직이지 않았다면 오른쪽
+        if (direction == 0)
+            direction = 1;
+
+
+        // =========================================
+        // 한 칸의 크기
+        // =========================================
+
+        float cellWidth =
+            gridRect.rect.width / gridSize;
+
+        float cellHeight =
+            gridRect.rect.height / gridSize;
+
+
+        // =========================================
+        // 시작점의 Grid Local 좌표
+        // =========================================
+
+        Vector2 startLocal;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            gridRect,
+            startScreenPosition,
+            GetUICamera(),
+            out startLocal
+        );
+
+
+        // =========================================
+        // 시작한 열 계산
+        // =========================================
+
+        float relativeX =
+            startLocal.x -
+            gridRect.rect.xMin;
+
+
+        int startColumn =
+            Mathf.FloorToInt(
+                relativeX / cellWidth
+            );
+
+
+        // 범위 제한
+        startColumn =
+            Mathf.Clamp(
+                startColumn,
+                0,
+                gridSize - 1
+            );
+
+
+        // =========================================
+        // 방향에 따른 최대 크기 계산
+        // =========================================
+
+        int maxWidth;
+
+        if (direction > 0)
+        {
+            // 왼쪽 → 오른쪽
+
+            maxWidth =
+                gridSize - startColumn;
+        }
+        else
+        {
+            // 오른쪽 → 왼쪽
+
+            maxWidth =
+                startColumn + 1;
+        }
+
+
+        // =========================================
+        // 실제 사용할 폭
+        // =========================================
+
+        int width =
+            Mathf.Min(
+                currentWidth,
+                maxWidth
+            );
+
+
+        width =
+            Mathf.Clamp(
+                width,
+                1,
+                maximumBlockWidth
+            );
+
+
+        // =========================================
+        // ★ 중요 ★
+        // 블록의 왼쪽 열 계산
+        // =========================================
+
+        int leftColumn;
+
+        if (direction > 0)
+        {
+            // 왼쪽 → 오른쪽
+            leftColumn = startColumn;
+        }
+        else
+        {
+            // 오른쪽 → 왼쪽
+            leftColumn =
+                startColumn - width + 1;
+        }
+
+
+        // 범위 보정
+        leftColumn =
+            Mathf.Clamp(
+                leftColumn,
+                0,
+                gridSize - width
+            );
+
+
+        // =========================================
+        // 가이드 크기
+        // =========================================
+
+        guideRect.sizeDelta =
+            new Vector2(
+                cellWidth * width,
+                cellHeight
+            );
+
+
+        // =========================================
+        // 가이드 X 위치
+        // =========================================
+
+        float targetX =
+            gridRect.rect.xMin +
+            (leftColumn * cellWidth) +
+            (cellWidth * width / 2f);
+
+
+        // =========================================
+        // 가이드 Y 위치
+        // =========================================
+
+        float targetY =
+            gridRect.rect.yMin -
+            cellHeight / 2f;
+
+
+        Vector3 worldPosition =
+            gridRect.TransformPoint(
+                new Vector3(
+                    targetX,
+                    targetY,
+                    0f
+                )
+            );
+
+
+        guideRect.position =
+            worldPosition;
+
+
+        guideImage.enabled = true;
+    }
+
+
+    // =========================================================
+    // GUIDE HIDE
+    // =========================================================
+
+    private void HideGuide()
+    {
+        if (guideImage != null)
+        {
+            guideImage.enabled = false;
+        }
+    }
+
+
+    // =========================================================
+    // BLOCK CREATE
+    // =========================================================
+
+    private void CreateBlock(int width)
     {
         if (squarePrefab == null)
         {
@@ -207,13 +667,25 @@ public class GridSwipeController : MonoBehaviour
             return;
         }
 
-        RectTransform square =
-            Instantiate(
-                squarePrefab,
-                gridRect.parent
+
+        // =========================================
+        // 드래그 방향
+        // =========================================
+
+        float direction =
+            Mathf.Sign(
+                currentScreenPosition.x -
+                startScreenPosition.x
             );
 
-        // 한 칸의 크기
+        if (direction == 0)
+            direction = 1;
+
+
+        // =========================================
+        // Grid 한 칸 크기
+        // =========================================
+
         float cellWidth =
             gridRect.rect.width / gridSize;
 
@@ -221,121 +693,245 @@ public class GridSwipeController : MonoBehaviour
             gridRect.rect.height / gridSize;
 
 
-        // =====================================================
-        // 네모 크기
-        // =====================================================
+        // =========================================
+        // 시작점의 Grid Local 좌표
+        // =========================================
 
-        square.sizeDelta = new Vector2(
-            cellWidth * size,
-            cellHeight * size
+        Vector2 startLocal;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            gridRect,
+            startScreenPosition,
+            GetUICamera(),
+            out startLocal
         );
 
 
-        // =====================================================
-        // 그리드 위치 계산
-        // =====================================================
+        // =========================================
+        // 시작 열
+        // =========================================
 
-        Vector3[] corners = new Vector3[4];
-
-        gridRect.GetWorldCorners(corners);
-
-        Vector3 bottomLeft = corners[0];
-
-        Vector3 bottomRight = corners[3];
-
-        float centerX =
-            (bottomLeft.x + bottomRight.x) / 2f;
+        float relativeX =
+            startLocal.x -
+            gridRect.rect.xMin;
 
 
-        // =====================================================
-        // 시작 위치
-        // 그리드 바로 아래
-        // =====================================================
+        int startColumn =
+            Mathf.FloorToInt(
+                relativeX / cellWidth
+            );
+
+
+        startColumn =
+            Mathf.Clamp(
+                startColumn,
+                0,
+                gridSize - 1
+            );
+
+
+        // =========================================
+        // 방향에 따른 최대 크기
+        // =========================================
+
+        int maxWidth;
+
+        if (direction > 0)
+        {
+            // 왼쪽 → 오른쪽
+
+            maxWidth =
+                gridSize - startColumn;
+        }
+        else
+        {
+            // 오른쪽 → 왼쪽
+
+            maxWidth =
+                startColumn + 1;
+        }
+
+
+        // =========================================
+        // 폭 제한
+        // =========================================
+
+        width =
+            Mathf.Clamp(
+                width,
+                1,
+                Mathf.Min(
+                    maximumBlockWidth,
+                    maxWidth
+                )
+            );
+
+
+        // =========================================
+        // ★ 실제 블록의 왼쪽 열 ★
+        // =========================================
+
+        int leftColumn;
+
+        if (direction > 0)
+        {
+            // 왼쪽 → 오른쪽
+
+            leftColumn =
+                startColumn;
+        }
+        else
+        {
+            // 오른쪽 → 왼쪽
+
+            leftColumn =
+                startColumn - width + 1;
+        }
+
+
+        // 혹시 모를 범위 보정
+        leftColumn =
+            Mathf.Clamp(
+                leftColumn,
+                0,
+                gridSize - width
+            );
+
+
+        // =========================================
+        // 블록 생성
+        // =========================================
+
+        RectTransform block =
+            Instantiate(
+                squarePrefab,
+                gridRect.parent
+            );
+
+
+        // =========================================
+        // 정확한 크기
+        // =========================================
+
+        block.sizeDelta =
+            new Vector2(
+                cellWidth * width,
+                cellHeight
+            );
+
+
+        // =========================================
+        // 블록 중앙 X
+        // =========================================
+
+        float blockCenterX =
+            gridRect.rect.xMin +
+            (leftColumn * cellWidth) +
+            (cellWidth * width / 2f);
+
+
+        // =========================================
+        // 그리드 아래에서 시작
+        // =========================================
 
         float startY =
-            bottomLeft.y -
-            (cellHeight * size) / 2f;
+            gridRect.rect.yMin -
+            cellHeight * 1.5f;
 
 
-        Vector3 startPosition =
-            new Vector3(
-                centerX,
-                startY,
-                square.position.z
-            );
-
-        square.position = startPosition;
-
-
-        // =====================================================
-        // 목표 위치
-        // =====================================================
-
-        float targetY =
-            bottomLeft.y +
-            (cellHeight * size) / 2f;
-
-
-        Vector3 targetPosition =
-            new Vector3(
-                centerX,
-                targetY,
-                square.position.z
+        Vector3 startWorldPosition =
+            gridRect.TransformPoint(
+                new Vector3(
+                    blockCenterX,
+                    startY,
+                    0f
+                )
             );
 
 
-        // =====================================================
-        // 위쪽으로 이동
-        // =====================================================
+        block.position =
+            startWorldPosition;
 
-        StartCoroutine(
-            MoveSquare(
-                square,
-                targetPosition
-            )
+    }
+
+    // =========================================================
+    // CELL WIDTH
+    // =========================================================
+
+    private float GetCellWidthInScreen()
+    {
+        if (gridRect == null)
+            return 1f;
+
+
+        Vector3 left =
+            gridRect.TransformPoint(
+                new Vector3(
+                    gridRect.rect.xMin,
+                    0f,
+                    0f
+                )
+            );
+
+
+        Vector3 right =
+            gridRect.TransformPoint(
+                new Vector3(
+                    gridRect.rect.xMin +
+                    gridRect.rect.width /
+                    gridSize,
+                    0f,
+                    0f
+                )
+            );
+
+
+        Vector2 leftScreen =
+            RectTransformUtility.WorldToScreenPoint(
+                GetUICamera(),
+                left
+            );
+
+
+        Vector2 rightScreen =
+            RectTransformUtility.WorldToScreenPoint(
+                GetUICamera(),
+                right
+            );
+
+
+        return Vector2.Distance(
+            leftScreen,
+            rightScreen
         );
     }
 
 
     // =========================================================
-    // 네모 이동
+    // UI CAMERA
     // =========================================================
 
-    private IEnumerator MoveSquare(
-        RectTransform square,
-        Vector3 targetPosition)
+    private Camera GetUICamera()
     {
-        Vector3 startPosition =
-            square.position;
-
-        float time = 0f;
+        if (canvasRect == null)
+            return null;
 
 
-        while (time < moveDuration)
+        Canvas canvas =
+            canvasRect.GetComponent<Canvas>();
+
+
+        if (canvas == null)
+            return null;
+
+
+        if (canvas.renderMode ==
+            RenderMode.ScreenSpaceOverlay)
         {
-            time += Time.deltaTime;
-
-            float t =
-                time / moveDuration;
-
-            // 부드러운 이동
-            t = Mathf.SmoothStep(
-                0f,
-                1f,
-                t
-            );
-
-            square.position =
-                Vector3.Lerp(
-                    startPosition,
-                    targetPosition,
-                    t
-                );
-
-            yield return null;
+            return null;
         }
 
 
-        square.position = targetPosition;
+        return canvas.worldCamera;
     }
 }
