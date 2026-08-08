@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 394542992866688787}
   - component: {fileID: 637864766039102786}
   - component: {fileID: 4780810069743496850}
+  - component: {fileID: -1976312519016111560}
   m_Layer: 0
   m_Name: Person 3
   m_TagString: Untagged
@@ -111,3 +112,26 @@ MonoBehaviour:
   destroyDistance: 0.1
   pathDotPrefab: {fileID: -6462717691596749266, guid: da7f422b5f62e5d46802a6cf0786955a, type: 3}
   dotSpacing: 0.5
+  animator: {fileID: -1976312519016111560}
+--- !u!95 &-1976312519016111560
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760140696356419052}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 64c22f1291fcb714285895c054010a00, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

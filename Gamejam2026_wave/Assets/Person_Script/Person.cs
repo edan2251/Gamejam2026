@@ -101,9 +101,9 @@ public class Person : MonoBehaviour
             target.position - transform.position
         ).normalized;
 
-        // 애니메이션 이동 방향 설정
-        animator.SetFloat("MoveX", direction.x);
-        animator.SetFloat("MoveY", direction.y);
+        UpdateAnimation(direction);
+
+        
 
         // 이동
         transform.position = Vector2.MoveTowards(
@@ -112,5 +112,32 @@ public class Person : MonoBehaviour
             currentMoveSpeed * Time.deltaTime
         );
     }
-}
 
+    private void UpdateAnimation(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            // 좌 / 우
+            if (direction.x > 0)
+            {
+                animator.SetInteger("Direction", 3);
+            }
+            else
+            {
+                animator.SetInteger("Direction", 2);
+            }
+        }
+        else
+        {
+            // 위 / 아래
+            if (direction.y > 0)
+            {
+                animator.SetInteger("Direction", 1);
+            }
+            else
+            {
+                animator.SetInteger("Direction", 0);
+            }
+        }
+    }
+}
