@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("Controllers")]
     public TweenController tweenController;
+    public ManaManager manaManager;
 
     [Header("Data")]
     public int highScore = 99; //나중에 최대점수 변수로 변경해야함.
@@ -22,6 +23,8 @@ public class UIManager : MonoBehaviour
     public RectTransform scoreRect;
     public TextMeshProUGUI scoreTxt;
     public TextMeshProUGUI startPromptTxt;
+
+    public GameObject startButton;
 
     void Start()
     {
@@ -41,6 +44,8 @@ public class UIManager : MonoBehaviour
         if (tweenController != null)
         {
             tweenController.PlayStartTransition(this);
+            manaManager.PlayIntroWaveAnimation();
+            startButton.SetActive(false);
         }
     }
 }

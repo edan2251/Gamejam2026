@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ManaManager : MonoBehaviour
+public class ManaCalculator : MonoBehaviour
 {
     [Header("Mana")]
     [SerializeField] private int mana = 10;

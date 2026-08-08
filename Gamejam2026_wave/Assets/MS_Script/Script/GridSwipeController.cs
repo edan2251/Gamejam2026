@@ -14,7 +14,7 @@ public class GridSwipeController : MonoBehaviour
     [SerializeField] private float blockMoveSpeed = 5f;
 
     [Header("Mana")]
-    [SerializeField] private ManaManager manaManager;
+    [SerializeField] private ManaCalculator manaManager;
 
     [Header("Drag")]
     //[SerializeField] private float minimumDragDistance = 0.1f;

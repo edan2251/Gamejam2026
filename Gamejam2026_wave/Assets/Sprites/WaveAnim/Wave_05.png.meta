@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: e2a2cf0092c744346b9e38ab56bc62b0
+guid: af2889f4f54b7f342aea2455efc55589
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8610565575992400378
-    second: Sand_0
+      213: 7583190428987531904
+    second: Wave_05_0
+  - first:
+      213: 6021460662668610436
+    second: Wave_05_1
+  - first:
+      213: 5837783613168188320
+    second: Wave_05_2
+  - first:
+      213: 1372298807753667325
+    second: Wave_05_3
+  - first:
+      213: -3773161085087628404
+    second: Wave_05_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sand_0
+      name: Wave_05_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 944
-        height: 944
+        x: 115
+        y: 223
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af9db3845cfde7770800000000000000
-      internalID: 8610565575992400378
+      spriteID: 082a1f78487ec3960800000000000000
+      internalID: 7583190428987531904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_05_1
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 91
+        width: 362
+        height: 869
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48bc953d196809350800000000000000
+      internalID: 6021460662668610436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_05_2
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 163
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ab7c7a2449f30150800000000000000
+      internalID: 5837783613168188320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_05_3
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 155
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df279d1be726b0310800000000000000
+      internalID: 1372298807753667325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_05_4
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 123
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c834603fbf903abc0800000000000000
+      internalID: -3773161085087628404
       vertices: []
       indices: 
       edges: []
@@ -148,7 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sand_0: 8610565575992400378
+      Wave_05_0: 7583190428987531904
+      Wave_05_1: 6021460662668610436
+      Wave_05_2: 5837783613168188320
+      Wave_05_3: 1372298807753667325
+      Wave_05_4: -3773161085087628404
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

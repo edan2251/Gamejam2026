@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: e2a2cf0092c744346b9e38ab56bc62b0
+guid: 04272b314dd8b5848852ae72e93c6cc7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8610565575992400378
-    second: Sand_0
+      213: -5918257728694359661
+    second: Wave_08_0
+  - first:
+      213: 651749327378512128
+    second: Wave_08_1
+  - first:
+      213: 3479715935762127642
+    second: Wave_08_2
+  - first:
+      213: 595734592538202885
+    second: Wave_08_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sand_0
+      name: Wave_08_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 944
-        height: 944
+        x: 19
+        y: 51
+        width: 62
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af9db3845cfde7770800000000000000
-      internalID: 8610565575992400378
+      spriteID: 39966f7b3ff1edda0800000000000000
+      internalID: -5918257728694359661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_08_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 498
+        height: 893
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 009fef46f8a7b0900800000000000000
+      internalID: 651749327378512128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_08_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1b1e5e053f6a4030800000000000000
+      internalID: 3479715935762127642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_08_3
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 27
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 503d6a0a479744800800000000000000
+      internalID: 595734592538202885
       vertices: []
       indices: 
       edges: []
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sand_0: 8610565575992400378
+      Wave_08_0: -5918257728694359661
+      Wave_08_1: 651749327378512128
+      Wave_08_2: 3479715935762127642
+      Wave_08_3: 595734592538202885
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
