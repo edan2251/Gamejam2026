@@ -14,6 +14,9 @@ public class Person : MonoBehaviour
     [SerializeField] private PathDot pathDotPrefab;
     [SerializeField] private float dotSpacing = 0.5f;
 
+    [Header("애니메이션")]
+    [SerializeField] private Animator animator;
+
     private float currentMoveSpeed = 0f;
 
     private Transform target;
@@ -97,6 +100,10 @@ public class Person : MonoBehaviour
         Vector2 direction = (
             target.position - transform.position
         ).normalized;
+
+        // 애니메이션 이동 방향 설정
+        animator.SetFloat("MoveX", direction.x);
+        animator.SetFloat("MoveY", direction.y);
 
         // 이동
         transform.position = Vector2.MoveTowards(

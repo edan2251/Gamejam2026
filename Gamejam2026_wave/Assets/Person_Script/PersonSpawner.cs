@@ -32,6 +32,7 @@ public class PersonSpawner : MonoBehaviour
     
 
 
+
     private void Start()
     {
         StartCoroutine(SpawnRoutine());
