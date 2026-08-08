@@ -17,7 +17,7 @@ public enum SpawnDirection
 public class PersonSpawner : MonoBehaviour
 {
     [Header("Person")]
-    [SerializeField] private Person personPrefab;
+    [SerializeField] private PersonSpawnManager spawnManager;
 
     [Header("Spawn")]
     [SerializeField] private Transform spawnPoint;
@@ -29,10 +29,7 @@ public class PersonSpawner : MonoBehaviour
     [Header("Direction")]
     [SerializeField] private SpawnDirection spawnDirection;
 
-    [Header("Spawn Time")]
-    [SerializeField] private float minSpawnTime = 1f;
-    [SerializeField] private float maxSpawnTime = 3f;
-
+    
 
 
     private void Start()
@@ -44,10 +41,7 @@ public class PersonSpawner : MonoBehaviour
     {
         while (true)
         {
-            float spawnTime = Random.Range(
-                minSpawnTime,
-                maxSpawnTime
-            );
+            float spawnTime = spawnManager.GetRandomSpawnInterval();
 
             yield return new WaitForSeconds(spawnTime);
 
@@ -82,6 +76,11 @@ public class PersonSpawner : MonoBehaviour
         }
 
         // 사람 생성
+        Person personPrefab = spawnManager.GetRandomPerson();
+
+        if (personPrefab == null)
+            return;
+
         Person person = Instantiate(
             personPrefab,
             spawnPosition,

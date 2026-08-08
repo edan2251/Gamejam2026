@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e20865b36974d49ab3f44eb9f910ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PersonSpawner
-  personPrefab: {fileID: 4780810069743496850, guid: 7b26d20a7b93a044ea300d4329201341, type: 3}
+  spawnManager: {fileID: 637598674}
   spawnPoint: {fileID: 717388125}
   spawnRange: 2
   targets:
@@ -815,6 +815,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &637598673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637598675}
+  - component: {fileID: 637598674}
+  m_Layer: 0
+  m_Name: PersonSpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &637598674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637598673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49489288301e4004581b0300cce3c0a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PersonSpawnManager
+  stages:
+  - startTime: 0
+    minSpawnInterval: 1
+    maxSpawnInterval: 3.5
+    persons:
+    - personPrefab: {fileID: 4780810069743496850, guid: 7b26d20a7b93a044ea300d4329201341, type: 3}
+      spawnWeight: 1
+    - personPrefab: {fileID: 4780810069743496850, guid: 7b26d20a7b93a044ea300d4329201341, type: 3}
+      spawnWeight: 1
+  - startTime: 21
+    minSpawnInterval: 0.5
+    maxSpawnInterval: 2
+    persons:
+    - personPrefab: {fileID: 4780810069743496850, guid: 7b26d20a7b93a044ea300d4329201341, type: 3}
+      spawnWeight: 8
+    - personPrefab: {fileID: 4780810069743496850, guid: 1755fe7e7e2694d4fbd9e095a95ed4d0, type: 3}
+      spawnWeight: 2
+--- !u!4 &637598675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637598673}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.41388, y: -0.43669, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &685869268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e20865b36974d49ab3f44eb9f910ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PersonSpawner
-  personPrefab: {fileID: 4780810069743496850, guid: 1755fe7e7e2694d4fbd9e095a95ed4d0, type: 3}
+  spawnManager: {fileID: 637598674}
   spawnPoint: {fileID: 352109615}
   spawnRange: 2
   targets:
@@ -1401,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e20865b36974d49ab3f44eb9f910ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PersonSpawner
-  personPrefab: {fileID: 4780810069743496850, guid: 71c80d8fb42c5354f98369b8751f15b8, type: 3}
+  spawnManager: {fileID: 637598674}
   spawnPoint: {fileID: 315826760}
   spawnRange: 2
   targets:
@@ -1453,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e20865b36974d49ab3f44eb9f910ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PersonSpawner
-  personPrefab: {fileID: 4780810069743496850, guid: 8dbeff6a67cf70348a64f1cddad2f133, type: 3}
+  spawnManager: {fileID: 637598674}
   spawnPoint: {fileID: 87778730}
   spawnRange: 2
   targets:
@@ -1585,3 +1646,4 @@ SceneRoots:
   - {fileID: 148120764}
   - {fileID: 820696247}
   - {fileID: 1181356055}
+  - {fileID: 637598675}

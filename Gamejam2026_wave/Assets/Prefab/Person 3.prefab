@@ -105,4 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de845556d7f631f45a11f30d199edc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Person
-  moveSpeed: 3
+  maxMoveSpeed: 5
+  acceleration: 3
+  slowDownDistance: 2
+  destroyDistance: 0.1
+  pathDotPrefab: {fileID: -6462717691596749266, guid: da7f422b5f62e5d46802a6cf0786955a, type: 3}
+  dotSpacing: 0.5

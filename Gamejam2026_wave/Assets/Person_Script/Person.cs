@@ -10,6 +10,10 @@ public class Person : MonoBehaviour
     [SerializeField] private float slowDownDistance = 2f;
     [SerializeField] private float destroyDistance = 0.1f;
 
+    [Header("Path")]
+    [SerializeField] private PathDot pathDotPrefab;
+    [SerializeField] private float dotSpacing = 0.5f;
+
     private float currentMoveSpeed = 0f;
 
     private Transform target;
@@ -17,6 +21,42 @@ public class Person : MonoBehaviour
     public void SetTarget(Transform target)
     {
         this.target = target;
+
+        CreatePath();
+    }
+
+    private void CreatePath()
+    {
+        if (target == null)
+            return;
+
+        float distance = Vector2.Distance(
+            transform.position,
+            target.position
+        );
+
+        int dotCount = Mathf.FloorToInt(
+            distance / dotSpacing
+        );
+
+        for (int i = 1; i <= dotCount; i++)
+        {
+            float ratio = (float)i / dotCount;
+
+            Vector2 position = Vector2.Lerp(
+                transform.position,
+                target.position,
+                ratio
+            );
+
+            PathDot dot = Instantiate(
+                pathDotPrefab,
+                position,
+                Quaternion.identity
+            );
+
+            dot.SetPerson(transform);
+        }
     }
 
     private void Update()
