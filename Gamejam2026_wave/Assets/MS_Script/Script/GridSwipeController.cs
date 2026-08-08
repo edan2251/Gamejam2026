@@ -45,6 +45,20 @@ public class GridSwipeController : MonoBehaviour
 
     private DragSide currentDragSide = DragSide.None;
 
+    // =========================================================
+    // Corner Drag
+    // =========================================================
+
+    // 꼭짓점 부근에서 시작했는지
+    private bool startedFromCorner = false;
+
+    // 가로 드래그일 경우 사용할 방향
+    // Bottom 또는 Top
+    private DragSide cornerHorizontalSide = DragSide.None;
+
+    // 세로 드래그일 경우 사용할 방향
+    // Left 또는 Right
+    private DragSide cornerVerticalSide = DragSide.None;
 
     // =========================================================
     // Awake
@@ -157,39 +171,325 @@ public class GridSwipeController : MonoBehaviour
     // =========================================================
 
     private void BeginDrag(
-        Vector2 worldPosition)
+    Vector2 worldPosition)
     {
         Debug.Log("드래그 시작");
 
 
+        // 이전 상태 초기화
+        startedFromCorner = false;
+
+        cornerHorizontalSide =
+            DragSide.None;
+
+        cornerVerticalSide =
+            DragSide.None;
+
         currentDragSide =
-            GetDragSide(worldPosition);
+            DragSide.None;
 
 
-        if (currentDragSide ==
-            DragSide.None)
+        // =========================================================
+        // 먼저 꼭짓점 영역인지 확인
+        // =========================================================
+
+        if (TryGetCornerSides(
+            worldPosition,
+            out DragSide horizontalSide,
+            out DragSide verticalSide))
         {
-            Debug.Log(
-                "Grid 주변에서 시작하지 않았습니다."
-            );
+            startedFromCorner = true;
 
-            return;
+            cornerHorizontalSide =
+                horizontalSide;
+
+            cornerVerticalSide =
+                verticalSide;
+
+
+            // 중요:
+            // 지금은 방향을 결정하지 않는다.
+            //
+            // 실제 마우스 이동 방향을 보고
+            // UpdateDrag에서 결정한다.
+            currentDragSide =
+                DragSide.None;
+
+
+            Debug.Log(
+                "꼭짓점 드래그 시작 / 가로 방향 후보 : " +
+                cornerHorizontalSide +
+                " / 세로 방향 후보 : " +
+                cornerVerticalSide
+            );
+        }
+        else
+        {
+            // =========================================
+            // 일반적인 가장자리라면 기존 방식
+            // =========================================
+
+            currentDragSide =
+                GetDragSide(
+                    worldPosition
+                );
+
+
+            if (currentDragSide ==
+                DragSide.None)
+            {
+                Debug.Log(
+                    "Grid 주변에서 시작하지 않았습니다."
+                );
+
+                return;
+            }
+
+
+            Debug.Log(
+                "일반 드래그 시작 위치 : " +
+                currentDragSide
+            );
         }
 
 
-        Debug.Log(
-            "드래그 시작 위치 : " +
-            currentDragSide
-        );
-
-
+        // 실제 드래그 시작 위치 저장
         startWorldPosition =
             worldPosition;
-
 
         currentWidth = 1;
 
         isDragging = true;
+    }
+
+    // =========================================================
+    // 꼭짓점 영역 검사
+    // =========================================================
+
+    private bool TryGetCornerSides(
+        Vector2 worldPosition,
+        out DragSide horizontalSide,
+        out DragSide verticalSide)
+    {
+        horizontalSide =
+            DragSide.None;
+
+        verticalSide =
+            DragSide.None;
+
+
+        if (gridRenderer == null)
+            return false;
+
+
+        Bounds bounds =
+            gridRenderer.bounds;
+
+
+        // =========================================================
+        // 각 경계까지의 거리
+        // =========================================================
+
+        float distanceBottom =
+            Mathf.Abs(
+                worldPosition.y -
+                bounds.min.y
+            );
+
+        float distanceTop =
+            Mathf.Abs(
+                worldPosition.y -
+                bounds.max.y
+            );
+
+        float distanceLeft =
+            Mathf.Abs(
+                worldPosition.x -
+                bounds.min.x
+            );
+
+        float distanceRight =
+            Mathf.Abs(
+                worldPosition.x -
+                bounds.max.x
+            );
+
+
+        // =========================================================
+        // 범위 검사
+        // =========================================================
+
+        bool insideHorizontalRange =
+            worldPosition.x >=
+                bounds.min.x -
+                dragZoneThickness &&
+            worldPosition.x <=
+                bounds.max.x +
+                dragZoneThickness;
+
+
+        bool insideVerticalRange =
+            worldPosition.y >=
+                bounds.min.y -
+                dragZoneThickness &&
+            worldPosition.y <=
+                bounds.max.y +
+                dragZoneThickness;
+
+
+        bool canBottom =
+            insideHorizontalRange &&
+            distanceBottom <=
+                dragZoneThickness;
+
+
+        bool canTop =
+            insideHorizontalRange &&
+            distanceTop <=
+                dragZoneThickness;
+
+
+        bool canLeft =
+            insideVerticalRange &&
+            distanceLeft <=
+                dragZoneThickness;
+
+
+        bool canRight =
+            insideVerticalRange &&
+            distanceRight <=
+                dragZoneThickness;
+
+
+        // =========================================================
+        // 가로 드래그 후보
+        // Bottom / Top 중 하나
+        // =========================================================
+
+        if (canBottom || canTop)
+        {
+            if (canBottom && canTop)
+            {
+                horizontalSide =
+                    distanceBottom <= distanceTop
+                    ? DragSide.Bottom
+                    : DragSide.Top;
+            }
+            else if (canBottom)
+            {
+                horizontalSide =
+                    DragSide.Bottom;
+            }
+            else
+            {
+                horizontalSide =
+                    DragSide.Top;
+            }
+        }
+
+
+        // =========================================================
+        // 세로 드래그 후보
+        // Left / Right 중 하나
+        // =========================================================
+
+        if (canLeft || canRight)
+        {
+            if (canLeft && canRight)
+            {
+                verticalSide =
+                    distanceLeft <= distanceRight
+                    ? DragSide.Left
+                    : DragSide.Right;
+            }
+            else if (canLeft)
+            {
+                verticalSide =
+                    DragSide.Left;
+            }
+            else
+            {
+                verticalSide =
+                    DragSide.Right;
+            }
+        }
+
+
+        // =========================================================
+        // 가로 방향 + 세로 방향을
+        // 동시에 가질 때만 꼭짓점
+        // =========================================================
+
+        return
+            horizontalSide != DragSide.None &&
+            verticalSide != DragSide.None;
+    }
+
+    // =========================================================
+    // 꼭짓점에서 실제 드래그 방향 결정
+    // =========================================================
+
+    private void ResolveCornerDirection(
+        Vector2 worldPosition)
+    {
+        if (!startedFromCorner)
+            return;
+
+
+        Vector2 dragDelta =
+            worldPosition -
+            startWorldPosition;
+
+
+        float absX =
+            Mathf.Abs(
+                dragDelta.x
+            );
+
+
+        float absY =
+            Mathf.Abs(
+                dragDelta.y
+            );
+
+
+        // =========================================
+        // X 이동량이 더 큼
+        // → 가로 드래그
+        // → Bottom 또는 Top
+        // =========================================
+
+        if (absX > absY)
+        {
+            currentDragSide =
+                cornerHorizontalSide;
+        }
+
+
+        // =========================================
+        // Y 이동량이 더 큼
+        // → 세로 드래그
+        // → Left 또는 Right
+        // =========================================
+
+        else if (absY > absX)
+        {
+            currentDragSide =
+                cornerVerticalSide;
+        }
+
+
+        // =========================================
+        // 정확히 같을 경우
+        // 기존 방향이 없다면 가로 우선
+        // =========================================
+
+        else if (currentDragSide ==
+                 DragSide.None)
+        {
+            currentDragSide =
+                cornerHorizontalSide;
+        }
     }
 
 
@@ -355,33 +655,63 @@ public class GridSwipeController : MonoBehaviour
     // =========================================================
 
     private void UpdateDrag(
-        Vector2 worldPosition)
+    Vector2 worldPosition)
     {
+        // =========================================================
+        // 꼭짓점에서 시작했다면
+        // 실제 마우스 이동 방향으로 Side 결정
+        // =========================================================
+
+        if (startedFromCorner)
+        {
+            ResolveCornerDirection(
+                worldPosition
+            );
+        }
+
+
+        // 아직 방향이 결정되지 않았다면
+        if (currentDragSide ==
+            DragSide.None)
+        {
+            currentWidth = 1;
+
+            return;
+        }
+
+
         float distance;
 
+        float cellSize;
 
-        // =========================================
-        // 위 / 아래에서 시작
+
+        // =========================================================
+        // Bottom / Top
         // → 가로 드래그
-        // =========================================
+        // =========================================================
 
         if (currentDragSide ==
-            DragSide.Bottom ||
+                DragSide.Bottom ||
             currentDragSide ==
-            DragSide.Top)
+                DragSide.Top)
         {
             distance =
                 Mathf.Abs(
                     worldPosition.x -
                     startWorldPosition.x
                 );
+
+
+            cellSize =
+                gridRenderer.bounds.size.x /
+                gridSize;
         }
 
 
-        // =========================================
-        // 왼쪽 / 오른쪽에서 시작
+        // =========================================================
+        // Left / Right
         // → 세로 드래그
-        // =========================================
+        // =========================================================
 
         else
         {
@@ -390,12 +720,17 @@ public class GridSwipeController : MonoBehaviour
                     worldPosition.y -
                     startWorldPosition.y
                 );
+
+
+            cellSize =
+                gridRenderer.bounds.size.y /
+                gridSize;
         }
 
 
-        // =========================================
-        // 최소 드래그 거리
-        // =========================================
+        // =========================================================
+        // 최소 거리
+        // =========================================================
 
         if (distance <
             minimumDragDistance)
@@ -406,17 +741,9 @@ public class GridSwipeController : MonoBehaviour
         }
 
 
-        // =========================================
-        // Grid 한 칸 크기
-        // =========================================
-
-        float cellSize =
-            GetCellWidth();
-
-
-        // =========================================
-        // 몇 칸 드래그했는지
-        // =========================================
+        // =========================================================
+        // 몇 칸인지 계산
+        // =========================================================
 
         int width =
             Mathf.RoundToInt(
@@ -443,13 +770,35 @@ public class GridSwipeController : MonoBehaviour
     // =========================================================
 
     private void EndDrag(
-        Vector2 worldPosition)
+    Vector2 worldPosition)
     {
         Debug.Log("드래그 종료");
 
 
         if (!isDragging)
             return;
+
+
+        // =========================================================
+        // 꼭짓점이었다면
+        // 최종 마우스 위치를 기준으로 방향을 다시 결정
+        // =========================================================
+
+        if (startedFromCorner)
+        {
+            ResolveCornerDirection(
+                worldPosition
+            );
+        }
+
+
+        if (currentDragSide ==
+            DragSide.None)
+        {
+            isDragging = false;
+
+            return;
+        }
 
 
         isDragging = false;
