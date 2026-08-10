@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: 2f546b38737ce8048a9ac2cb1754753b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6905553761053401200
+    second: TwoWave_19_0
+  - first:
+      213: 1571287378452893402
+    second: TwoWave_19_1
+  - first:
+      213: 5210755404794725420
+    second: TwoWave_19_2
+  - first:
+      213: -9107126885739140556
+    second: TwoWave_19_3
+  - first:
+      213: 8937798089146805158
+    second: TwoWave_19_4
+  - first:
+      213: 5859567224650218122
+    second: TwoWave_19_5
+  - first:
+      213: -823254248954107751
+    second: TwoWave_19_6
+  - first:
+      213: -8985683490765224791
+    second: TwoWave_19_7
+  - first:
+      213: -970347390968358622
+    second: TwoWave_19_8
+  - first:
+      213: -3434273858814170847
+    second: TwoWave_19_9
+  - first:
+      213: -7165942011605675534
+    second: TwoWave_19_10
+  - first:
+      213: 7306786062696925432
+    second: TwoWave_19_11
+  - first:
+      213: -1693685512388938081
+    second: TwoWave_19_12
+  - first:
+      213: -292655132574382855
+    second: TwoWave_19_13
+  - first:
+      213: 2501786372422519198
+    second: TwoWave_19_14
+  - first:
+      213: 2550763367391782630
+    second: TwoWave_19_15
+  - first:
+      213: -3354209526152593266
+    second: TwoWave_19_16
+  - first:
+      213: -2290676192407558564
+    second: TwoWave_19_17
+  - first:
+      213: -8291913925091241012
+    second: TwoWave_19_18
+  - first:
+      213: 3863174378109663078
+    second: TwoWave_19_19
+  - first:
+      213: 6476696894356839320
+    second: TwoWave_19_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TwoWave_19_0
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 375
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07063f8fe8475df50800000000000000
+      internalID: 6905553761053401200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_1
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 363
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade4db0bb855ec510800000000000000
+      internalID: 1571287378452893402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_2
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 375
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c248c32de62505840800000000000000
+      internalID: 5210755404794725420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_3
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 363
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43aeb1b595cfc9180800000000000000
+      internalID: -9107126885739140556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_4
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 375
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aba2c1f100790c70800000000000000
+      internalID: 8937798089146805158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_5
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 299
+        width: 34
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a3cc2785d515150800000000000000
+      internalID: 5859567224650218122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_6
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 271
+        width: 46
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99862435f963394f0800000000000000
+      internalID: -823254248954107751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_7
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 287
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a4c8dc29707c4380800000000000000
+      internalID: -8985683490765224791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_8
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 255
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2299a946032a882f0800000000000000
+      internalID: -970347390968358622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_9
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 211
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 129a8f7fe120750d0800000000000000
+      internalID: -3434273858814170847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_10
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 183
+        width: 98
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f1123d05b57d8c90800000000000000
+      internalID: -7165942011605675534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_11
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 215
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f843d4063be66560800000000000000
+      internalID: 7306786062696925432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_12
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 199
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f96f4d00002de78e0800000000000000
+      internalID: -1693685512388938081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_13
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 159
+        width: 38
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f4853d15b740fbf0800000000000000
+      internalID: -292655132574382855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_14
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 167
+        width: 46
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e994820637128b220800000000000000
+      internalID: 2501786372422519198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_15
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 167
+        width: 34
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e66773a4c1266320800000000000000
+      internalID: 2550763367391782630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_16
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 91
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e80817315347371d0800000000000000
+      internalID: -3354209526152593266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_17
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c566a18b322e530e0800000000000000
+      internalID: -2290676192407558564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_18
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 91
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc352d2b7343dec80800000000000000
+      internalID: -8291913925091241012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_19
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 91
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 667fd9001a0cc9530800000000000000
+      internalID: 3863174378109663078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwoWave_19_20
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89bd30aa289d1e950800000000000000
+      internalID: 6476696894356839320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      TwoWave_19_0: 6905553761053401200
+      TwoWave_19_1: 1571287378452893402
+      TwoWave_19_10: -7165942011605675534
+      TwoWave_19_11: 7306786062696925432
+      TwoWave_19_12: -1693685512388938081
+      TwoWave_19_13: -292655132574382855
+      TwoWave_19_14: 2501786372422519198
+      TwoWave_19_15: 2550763367391782630
+      TwoWave_19_16: -3354209526152593266
+      TwoWave_19_17: -2290676192407558564
+      TwoWave_19_18: -8291913925091241012
+      TwoWave_19_19: 3863174378109663078
+      TwoWave_19_2: 5210755404794725420
+      TwoWave_19_20: 6476696894356839320
+      TwoWave_19_3: -9107126885739140556
+      TwoWave_19_4: 8937798089146805158
+      TwoWave_19_5: 5859567224650218122
+      TwoWave_19_6: -823254248954107751
+      TwoWave_19_7: -8985683490765224791
+      TwoWave_19_8: -970347390968358622
+      TwoWave_19_9: -3434273858814170847
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

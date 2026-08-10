@@ -89,6 +89,20 @@ public class ManaManager : MonoBehaviour
         }
     }
 
+    public void ResetMana()
+    {
+        // 마나 최대치로 복구
+        currentMana = maxMana;
+        regenTimer = 0f;
+
+        // 진행 중이던 애니메이션 정지
+        moveTweener?.Kill();
+
+        // 다시 원래 타이틀 화면의 위치(IntroManaPosY)로 부드럽게 복구
+        moveTweener = DOTween.To(() => currentBaseY, x => currentBaseY = x, introManaPosY, waveTransitionDuration)
+                             .SetEase(Ease.InOutCubic);
+    }
+
     private void UpdateWavePosition()
     {
         float manaRatio = currentMana / maxMana;

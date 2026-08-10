@@ -1,37 +1,26 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using static PersonSpawner;
-using static UnityEngine.GraphicsBuffer;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public enum SpawnDirection
-{
-    Left,
-    Right,
-    Top,
-    Bottom
-}
-
+// 방향 열거형
+public enum SpawnDirection { Left, Right, Top, Bottom }
 
 public class PersonSpawner : MonoBehaviour
 {
     [Header("Person")]
     [SerializeField] private PersonSpawnManager spawnManager;
 
-    [Header("Spawn")]
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private float spawnRange = 5f;
+    [Header("UI Spawn Settings")]
+    [Tooltip("사람들이 생성될 부모 캔버스 패널")]
+    [SerializeField] private RectTransform personContainer;
+    [SerializeField] private RectTransform spawnPoint; // 스폰 기준점이 될 UI 객체
+    [SerializeField] private float spawnRange = 100f;  // 픽셀 단위 범위
 
-    [Header("Targets")]
-    [SerializeField] private List<Transform> targets;
+    [Header("Targets (UI RectTransforms)")]
+    [SerializeField] private List<RectTransform> targets;
 
     [Header("Direction")]
     [SerializeField] private SpawnDirection spawnDirection;
-
-    
-
-
 
     private void Start()
     {
@@ -43,57 +32,38 @@ public class PersonSpawner : MonoBehaviour
         while (true)
         {
             float spawnTime = spawnManager.GetRandomSpawnInterval();
-
             yield return new WaitForSeconds(spawnTime);
-
             SpawnPerson();
         }
     }
 
-
     public void SpawnPerson()
     {
-        Vector2 spawnPosition = spawnPoint.position;
+        Vector2 spawnPosition = spawnPoint.anchoredPosition;
 
         switch (spawnDirection)
         {
             case SpawnDirection.Left:
             case SpawnDirection.Right:
-                // 좌우 스포너 → Y가 랜덤
-                spawnPosition.y += Random.Range(
-                    -spawnRange,
-                    spawnRange
-                );
+                spawnPosition.y += Random.Range(-spawnRange, spawnRange);
                 break;
 
             case SpawnDirection.Top:
             case SpawnDirection.Bottom:
-                // 상하 스포너 → X가 랜덤
-                spawnPosition.x += Random.Range(
-                    -spawnRange,
-                    spawnRange
-                );
+                spawnPosition.x += Random.Range(-spawnRange, spawnRange);
                 break;
         }
 
-        // 사람 생성
         Person personPrefab = spawnManager.GetRandomPerson();
+        if (personPrefab == null) return;
 
-        if (personPrefab == null)
-            return;
+        // UI 캔버스 자식으로 생성
+        Person person = Instantiate(personPrefab, personContainer);
+        person.rectTransform.anchoredPosition = spawnPosition;
+        person.rectTransform.localScale = Vector3.one;
 
-        Person person = Instantiate(
-            personPrefab,
-            spawnPosition,
-            Quaternion.identity
-        );
-
-        // 타겟 랜덤 선택
-        Transform randomTarget = targets[
-            Random.Range(0, targets.Count)
-        ];
-
-        // 사람에게 타겟 전달
-        person.SetTarget(randomTarget);
+        // 타겟 랜덤 선택 후 전달 (Dot 생성용 부모 캔버스도 같이 넘김)
+        RectTransform randomTarget = targets[Random.Range(0, targets.Count)];
+        person.SetTarget(randomTarget, personContainer);
     }
 }

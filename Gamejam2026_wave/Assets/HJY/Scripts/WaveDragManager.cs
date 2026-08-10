@@ -125,10 +125,13 @@ public class WaveDragManager : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         int waveSize = finalEndIdx - finalStartIdx + 1;
 
-        if (manaManager != null && manaManager.currentMana < waveSize)
+        if (manaManager != null)
         {
-            Debug.Log("마나 부족!");
-            return;
+            if (manaManager.currentMana < waveSize)
+            {
+                return;
+            }
+            manaManager.UseMana(waveSize);
         }
 
         WaveInputData inputData = new WaveInputData

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - BlockDestroyTrigger
+  - Wall
   layers:
   - Default
   - TransparentFX

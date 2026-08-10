@@ -6,13 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/PersonTestScene.unity
-    guid: ebc5ce490fbd5ae459819cdeac5ab373
-  - enabled: 1
-    path: Assets/Scenes/AnimatorTestScene.unity
-    guid: 6342ad31ffdb59e47a0c0fab403a7e98
+    path: Assets/Scenes/WaveGame.unity
+    guid: 120b88ef8bbe4b7419baed4fef0ac479
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

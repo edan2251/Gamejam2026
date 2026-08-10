@@ -58,6 +58,17 @@ public class WaveAnimationSpawn : MonoBehaviour
                 break;
         }
 
-        WavePoolManager.Instance.SpawnFromPool(waveSize, waveContainer, spawnPosition, spawnRotation);
+        // 1. 오브젝트 풀에서 비주얼 파도 애니메이션 생성
+        GameObject spawnedWave = WavePoolManager.Instance.SpawnFromPool(waveSize, waveContainer, spawnPosition, spawnRotation);
+
+        // 2. 파도 안에 숨어있는 WaveFront(히트박스)를 찾아 초기화 전달
+        if (spawnedWave != null)
+        {
+            WaveFront front = spawnedWave.GetComponentInChildren<WaveFront>();
+            if (front != null)
+            {
+                front.Initialize(waveSize);
+            }
+        }
     }
 }
