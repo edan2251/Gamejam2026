@@ -140,10 +140,10 @@ TextureImporter:
       name: Wave_16_0
       rect:
         serializedVersion: 2
-        x: 439
-        y: 539
+        x: 665
+        y: 580
         width: 30
-        height: 18
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,8 +162,8 @@ TextureImporter:
       name: Wave_16_1
       rect:
         serializedVersion: 2
-        x: 191
-        y: 467
+        x: 417
+        y: 508
         width: 34
         height: 34
       alignment: 0
@@ -184,8 +184,8 @@ TextureImporter:
       name: Wave_16_2
       rect:
         serializedVersion: 2
-        x: 371
-        y: 487
+        x: 597
+        y: 528
         width: 30
         height: 22
       alignment: 0
@@ -206,8 +206,8 @@ TextureImporter:
       name: Wave_16_3
       rect:
         serializedVersion: 2
-        x: 199
-        y: 63
+        x: 425
+        y: 104
         width: 238
         height: 418
       alignment: 0
@@ -228,8 +228,8 @@ TextureImporter:
       name: Wave_16_4
       rect:
         serializedVersion: 2
-        x: 463
-        y: 451
+        x: 689
+        y: 492
         width: 14
         height: 14
       alignment: 0
@@ -250,8 +250,8 @@ TextureImporter:
       name: Wave_16_5
       rect:
         serializedVersion: 2
-        x: 175
-        y: 387
+        x: 401
+        y: 428
         width: 34
         height: 46
       alignment: 0
@@ -272,8 +272,8 @@ TextureImporter:
       name: Wave_16_6
       rect:
         serializedVersion: 2
-        x: 427
-        y: 407
+        x: 653
+        y: 448
         width: 26
         height: 38
       alignment: 0
@@ -294,8 +294,8 @@ TextureImporter:
       name: Wave_16_7
       rect:
         serializedVersion: 2
-        x: 179
-        y: 355
+        x: 405
+        y: 396
         width: 14
         height: 18
       alignment: 0
@@ -316,10 +316,10 @@ TextureImporter:
       name: Wave_16_8
       rect:
         serializedVersion: 2
-        x: 403
-        y: 43
+        x: 629
+        y: 83
         width: 22
-        height: 18
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

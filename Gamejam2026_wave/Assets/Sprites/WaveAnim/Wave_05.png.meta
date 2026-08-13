@@ -128,8 +128,8 @@ TextureImporter:
       name: Wave_05_0
       rect:
         serializedVersion: 2
-        x: 115
-        y: 223
+        x: 341
+        y: 264
         width: 10
         height: 10
       alignment: 0
@@ -150,8 +150,8 @@ TextureImporter:
       name: Wave_05_1
       rect:
         serializedVersion: 2
-        x: 131
-        y: 91
+        x: 357
+        y: 131
         width: 362
         height: 869
       alignment: 0
@@ -172,8 +172,8 @@ TextureImporter:
       name: Wave_05_2
       rect:
         serializedVersion: 2
-        x: 523
-        y: 163
+        x: 749
+        y: 204
         width: 6
         height: 14
       alignment: 0
@@ -194,8 +194,8 @@ TextureImporter:
       name: Wave_05_3
       rect:
         serializedVersion: 2
-        x: 103
-        y: 155
+        x: 329
+        y: 196
         width: 6
         height: 6
       alignment: 0
@@ -216,8 +216,8 @@ TextureImporter:
       name: Wave_05_4
       rect:
         serializedVersion: 2
-        x: 99
-        y: 123
+        x: 325
+        y: 164
         width: 38
         height: 30
       alignment: 0

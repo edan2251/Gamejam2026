@@ -5,6 +5,15 @@ TextureImporter:
   - first:
       213: 4002246591873398397
     second: Wave_10_0
+  - first:
+      213: -9103884357908341851
+    second: Wave_10_1
+  - first:
+      213: 7212183574430990698
+    second: Wave_10_2
+  - first:
+      213: 3429256193065339655
+    second: Wave_10_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,10 +125,10 @@ TextureImporter:
       name: Wave_10_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 7
-        width: 626
-        height: 742
+        x: 213
+        y: 87
+        width: 31
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,6 +139,72 @@ TextureImporter:
       bones: []
       spriteID: d76b12c0216da8730800000000000000
       internalID: 4002246591873398397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_10_1
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 48
+        width: 627
+        height: 742
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ab53a2396188a180800000000000000
+      internalID: -9103884357908341851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_10_2
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 12
+        width: 35
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a61cdd8cfb2d61460800000000000000
+      internalID: 7212183574430990698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_10_3
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 4
+        width: 39
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70bc77fa65a279f20800000000000000
+      internalID: 3429256193065339655
       vertices: []
       indices: 
       edges: []
@@ -149,6 +224,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Wave_10_0: 4002246591873398397
+      Wave_10_1: -9103884357908341851
+      Wave_10_2: 7212183574430990698
+      Wave_10_3: 3429256193065339655
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

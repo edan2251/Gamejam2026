@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: e8388045bd8ba5040a450d7e58d4c103
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2960716959226223462
+    second: ThreeWave_16_0
+  - first:
+      213: 6735996491982937550
+    second: ThreeWave_16_1
+  - first:
+      213: 755718542940727021
+    second: ThreeWave_16_2
+  - first:
+      213: 4684540674066209744
+    second: ThreeWave_16_3
+  - first:
+      213: 3309504322180274001
+    second: ThreeWave_16_4
+  - first:
+      213: -8938263449383016297
+    second: ThreeWave_16_5
+  - first:
+      213: 6956365700645638653
+    second: ThreeWave_16_6
+  - first:
+      213: 7786022504529304760
+    second: ThreeWave_16_7
+  - first:
+      213: -3833771513666396898
+    second: ThreeWave_16_8
+  - first:
+      213: -7518393836592507171
+    second: ThreeWave_16_9
+  - first:
+      213: 1899505533432854509
+    second: ThreeWave_16_10
+  - first:
+      213: -1305712748630249516
+    second: ThreeWave_16_11
+  - first:
+      213: -183577502932582305
+    second: ThreeWave_16_12
+  - first:
+      213: -695570529269106947
+    second: ThreeWave_16_13
+  - first:
+      213: 8209703307822849189
+    second: ThreeWave_16_14
+  - first:
+      213: -2227356174522752142
+    second: ThreeWave_16_15
+  - first:
+      213: -7562515843106388004
+    second: ThreeWave_16_16
+  - first:
+      213: -1180914005411321202
+    second: ThreeWave_16_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThreeWave_16_0
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 580
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a94a8d4bc9b69e6d0800000000000000
+      internalID: -2960716959226223462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_1
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 508
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd9be0ee111b7d50800000000000000
+      internalID: 6735996491982937550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_2
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 528
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de66826c20adc7a00800000000000000
+      internalID: 755718542940727021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_3
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 508
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dbd59d5ce4d20140800000000000000
+      internalID: 4684540674066209744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_4
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 528
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157dc2285a8bded20800000000000000
+      internalID: 3309504322180274001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_5
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 492
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798eaaeefb8e4f380800000000000000
+      internalID: -8938263449383016297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_6
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 104
+        width: 238
+        height: 418
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df1d1b29fb9f98060800000000000000
+      internalID: 6956365700645638653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_7
+      rect:
+        serializedVersion: 2
+        x: 1005
+        y: 492
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bc9aab37328d0c60800000000000000
+      internalID: 7786022504529304760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_8
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 104
+        width: 558
+        height: 374
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d17e9de15bbcac0800000000000000
+      internalID: -3833771513666396898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_9
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 428
+        width: 34
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd6da68c3ac49a790800000000000000
+      internalID: -7518393836592507171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_10
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 448
+        width: 26
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de77729f7366c5a10800000000000000
+      internalID: 1899505533432854509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_11
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 396
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dfe13f4c2d21ede0800000000000000
+      internalID: -1305712748630249516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_12
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 132
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5043f4db3dc37df0800000000000000
+      internalID: -183577502932582305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_13
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 180
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df63fa6f946d856f0800000000000000
+      internalID: -695570529269106947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_14
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 124
+        width: 106
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ac512e59a9bee170800000000000000
+      internalID: 8209703307822849189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_15
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 83
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2736c4d3c57d611e0800000000000000
+      internalID: -2227356174522752142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_16
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 83
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7416b98eb8c0790800000000000000
+      internalID: -7562515843106388004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThreeWave_16_17
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 83
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8aac2508fc8c9fe0800000000000000
+      internalID: -1180914005411321202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThreeWave_16_0: -2960716959226223462
+      ThreeWave_16_1: 6735996491982937550
+      ThreeWave_16_10: 1899505533432854509
+      ThreeWave_16_11: -1305712748630249516
+      ThreeWave_16_12: -183577502932582305
+      ThreeWave_16_13: -695570529269106947
+      ThreeWave_16_14: 8209703307822849189
+      ThreeWave_16_15: -2227356174522752142
+      ThreeWave_16_16: -7562515843106388004
+      ThreeWave_16_17: -1180914005411321202
+      ThreeWave_16_2: 755718542940727021
+      ThreeWave_16_3: 4684540674066209744
+      ThreeWave_16_4: 3309504322180274001
+      ThreeWave_16_5: -8938263449383016297
+      ThreeWave_16_6: 6956365700645638653
+      ThreeWave_16_7: 7786022504529304760
+      ThreeWave_16_8: -3833771513666396898
+      ThreeWave_16_9: -7518393836592507171
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

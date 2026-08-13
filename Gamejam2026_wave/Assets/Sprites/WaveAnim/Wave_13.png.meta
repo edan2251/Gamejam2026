@@ -119,8 +119,8 @@ TextureImporter:
       name: Wave_13_0
       rect:
         serializedVersion: 2
-        x: 75
-        y: 7
+        x: 301
+        y: 47
         width: 450
         height: 602
       alignment: 0
@@ -141,10 +141,10 @@ TextureImporter:
       name: Wave_13_1
       rect:
         serializedVersion: 2
-        x: 527
-        y: 7
+        x: 753
+        y: 47
         width: 22
-        height: 18
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

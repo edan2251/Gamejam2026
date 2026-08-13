@@ -134,8 +134,8 @@ TextureImporter:
       name: Wave_15_0
       rect:
         serializedVersion: 2
-        x: 171
-        y: 463
+        x: 397
+        y: 504
         width: 54
         height: 62
       alignment: 0
@@ -156,8 +156,8 @@ TextureImporter:
       name: Wave_15_1
       rect:
         serializedVersion: 2
-        x: 179
-        y: 35
+        x: 405
+        y: 76
         width: 290
         height: 478
       alignment: 0
@@ -178,10 +178,10 @@ TextureImporter:
       name: Wave_15_2
       rect:
         serializedVersion: 2
-        x: 399
-        y: 507
+        x: 625
+        y: 548
         width: 82
-        height: 54
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +200,8 @@ TextureImporter:
       name: Wave_15_3
       rect:
         serializedVersion: 2
-        x: 167
-        y: 347
+        x: 393
+        y: 388
         width: 46
         height: 106
       alignment: 0
@@ -222,8 +222,8 @@ TextureImporter:
       name: Wave_15_4
       rect:
         serializedVersion: 2
-        x: 463
-        y: 451
+        x: 689
+        y: 492
         width: 18
         height: 22
       alignment: 0
@@ -244,10 +244,10 @@ TextureImporter:
       name: Wave_15_5
       rect:
         serializedVersion: 2
-        x: 403
-        y: 31
+        x: 629
+        y: 71
         width: 34
-        height: 30
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,8 +266,8 @@ TextureImporter:
       name: Wave_15_6
       rect:
         serializedVersion: 2
-        x: 459
-        y: 39
+        x: 685
+        y: 80
         width: 18
         height: 18
       alignment: 0

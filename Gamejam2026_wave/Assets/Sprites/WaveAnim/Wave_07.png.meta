@@ -5,6 +5,18 @@ TextureImporter:
   - first:
       213: -8022408257081944941
     second: Wave_07_0
+  - first:
+      213: -148018272421380135
+    second: Wave_07_1
+  - first:
+      213: 2612663487747556663
+    second: Wave_07_2
+  - first:
+      213: -2600260386940165970
+    second: Wave_07_3
+  - first:
+      213: 4260412062049266765
+    second: Wave_07_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,9 +128,9 @@ TextureImporter:
       name: Wave_07_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 3
-        width: 506
+        x: 229
+        y: 44
+        width: 587
         height: 946
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -130,6 +142,94 @@ TextureImporter:
       bones: []
       spriteID: 3945879d13eaaa090800000000000000
       internalID: -8022408257081944941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_07_1
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 216
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9df7e0c5a2222fdf0800000000000000
+      internalID: -148018272421380135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_07_2
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 103
+        width: 66
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73583d0899b024420800000000000000
+      internalID: 2612663487747556663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_07_3
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 39
+        width: 23
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea069e074f40aebd0800000000000000
+      internalID: -2600260386940165970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wave_07_4
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 32
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c6c33a236002b30800000000000000
+      internalID: 4260412062049266765
       vertices: []
       indices: 
       edges: []
@@ -149,6 +249,10 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Wave_07_0: -8022408257081944941
+      Wave_07_1: -148018272421380135
+      Wave_07_2: 2612663487747556663
+      Wave_07_3: -2600260386940165970
+      Wave_07_4: 4260412062049266765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
