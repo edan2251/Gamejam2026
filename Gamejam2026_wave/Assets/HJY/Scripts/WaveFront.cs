@@ -80,10 +80,10 @@ public class WaveFront : MonoBehaviour
         {
             if (UIManager.Instance != null) UIManager.Instance.AddScore(scoreGained);
 
-            // ★ [수정 완료] TriggerCameraShake를 TriggerShake로 이름 변경!
             if (GameFeelManager.Instance != null)
             {
-                GameFeelManager.Instance.TriggerShake(1f + (scoreGained * 0.3f));
+                // ★ 수정됨: 현재 파도의 위치(transform.position)를 충격파의 중심으로 같이 넘겨줍니다!
+                GameFeelManager.Instance.TriggerShake(1f + (scoreGained * 0.3f), transform.position);
             }
         }
 

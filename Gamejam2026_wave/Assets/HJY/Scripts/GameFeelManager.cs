@@ -1,27 +1,40 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal; // ★ URP 효과를 코드로 제어하기 위해 추가!
 
 public class GameFeelManager : MonoBehaviour
 {
     public static GameFeelManager Instance { get; private set; }
 
-    [Header("Hit Stop Settings (역경직)")]
+    [Header("Hit Stop Settings")]
     public float hitStopDuration = 0.05f;
 
-    [Header("Shake Target (흔들 대상)")]
-    // ★ 유저님 말씀대로 흔들 대상을 직접 끌어다 넣을 수 있게 만들었습니다!
+    [Header("Shake Target")]
     public RectTransform targetToShake;
 
-    [Header("Shake Settings (흔들림 설정)")]
+    [Header("Shake Settings")]
     public float shakeDuration = 0.2f;
-    public float shakeStrength = 30f; // UI 기준이므로 30~50 정도의 큰 값을 넣어야 잘 보입니다.
-    public int shakeVibrato = 10;
+    public float shakeStrength = 50f; // 조금 더 폭발적으로(50) 올렸습니다.
+    public int shakeVibrato = 15;
+
+    [Header("Distortion Settings")]
+    public Volume distortionVolume;
+    public float distortionDuration = 0.5f; // 여운을 위해 살짝 늘림
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        if (distortionVolume != null)
+        {
+            distortionVolume.weight = 0f;
+        }
     }
 
     public void TriggerHitStop()
@@ -37,18 +50,42 @@ public class GameFeelManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    // ★ 지정된 타겟(UI 패널)을 직접 흔듭니다!
-    public void TriggerShake(float intensityMultiplier = 1f)
+    // ★ 충돌 지점(impactPos)을 파라미터로 받습니다!
+    public void TriggerShake(float intensityMultiplier, Vector3 impactPos)
     {
+        // 1. 화면 흔들림
         if (targetToShake != null)
         {
             targetToShake.DOComplete();
-            // UI RectTransform 전용 흔들림 함수 (DOShakeAnchorPos)
-            targetToShake.DOShakeAnchorPos(shakeDuration, shakeStrength * intensityMultiplier, shakeVibrato);
+            targetToShake.DOShakeAnchorPos(shakeDuration, shakeStrength * intensityMultiplier, shakeVibrato)
+                         .SetUpdate(true);
         }
-        else
+
+        // 2. 폭발적인 공간 왜곡 (중심점 이동)
+        if (distortionVolume != null && distortionVolume.profile != null)
         {
-            Debug.LogWarning("흔들 대상(Target To Shake)이 연결되지 않았습니다!");
+            DOTween.Kill(distortionVolume);
+
+            // ★ URP 볼륨에서 Lens Distortion 효과를 찾아서 중심점을 충돌 지점으로 변경합니다.
+            if (distortionVolume.profile.TryGet<LensDistortion>(out var lensDistortion))
+            {
+                if (Camera.main != null)
+                {
+                    // 게임 월드 좌표를 화면 비율(0~1) 좌표로 변환하여 왜곡 중심(Center)에 넣습니다.
+                    Vector2 viewportPos = Camera.main.WorldToViewportPoint(impactPos);
+                    lensDistortion.center.value = viewportPos;
+                }
+            }
+
+            // 가중치를 0.7 ~ 1.0 사이로 매우 강하게 터뜨림!
+            float targetWeight = Mathf.Clamp01(0.7f + (intensityMultiplier * 0.1f));
+            distortionVolume.weight = targetWeight;
+
+            // 스르륵 원상복구
+            DOTween.To(() => distortionVolume.weight, x => distortionVolume.weight = x, 0f, distortionDuration)
+                   .SetTarget(distortionVolume)
+                   .SetUpdate(true)
+                   .SetEase(Ease.OutCirc); // OutCirc를 쓰면 초반에 강하게 터지고 부드럽게 가라앉습니다.
         }
     }
 }
