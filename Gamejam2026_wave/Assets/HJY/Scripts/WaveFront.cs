@@ -40,13 +40,10 @@ public class WaveFront : MonoBehaviour
                     person.transform.SetParent(this.transform);
                     sweptPersons.Add(person);
 
-                    // ★ [타격감 연출 1 & 2] 역경직과 플로팅 텍스트 발생!
+                    // ★ [수정 완료] 부딪히는 순간에는 흔들림이 아니라 역경직(HitStop)을 발생시킵니다!
                     if (GameFeelManager.Instance != null)
                     {
                         GameFeelManager.Instance.TriggerHitStop();
-
-                        // 현재까지 모은 콤보 수치로 텍스트 띄우기 (예: "1 Combo!", "2 Combo!")
-                        GameFeelManager.Instance.SpawnFloatingText($"+{sweptPersons.Count}", person.transform.position);
                     }
                 }
             }
@@ -83,11 +80,10 @@ public class WaveFront : MonoBehaviour
         {
             if (UIManager.Instance != null) UIManager.Instance.AddScore(scoreGained);
 
-            // ★ [타격감 연출 3] 파도가 끝날 때 점수를 정산하며 카메라 흔들기!
-            // 많이 쓸어담았을수록 화면이 더 강하게 흔들립니다 (scoreGained * 0.3f)
+            // ★ [수정 완료] TriggerCameraShake를 TriggerShake로 이름 변경!
             if (GameFeelManager.Instance != null)
             {
-                GameFeelManager.Instance.TriggerCameraShake(1f + (scoreGained * 0.3f));
+                GameFeelManager.Instance.TriggerShake(1f + (scoreGained * 0.3f));
             }
         }
 

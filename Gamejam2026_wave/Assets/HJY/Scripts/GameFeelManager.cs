@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using TMPro;
 using DG.Tweening;
 
 public class GameFeelManager : MonoBehaviour
@@ -10,18 +9,14 @@ public class GameFeelManager : MonoBehaviour
     [Header("Hit Stop Settings (역경직)")]
     public float hitStopDuration = 0.05f;
 
-    // ★ 카메라 쉐이크 -> UI 쉐이크로 변경!
-    [Header("UI Shake Settings (화면 흔들림)")]
+    [Header("Shake Target (흔들 대상)")]
+    // ★ 유저님 말씀대로 흔들 대상을 직접 끌어다 넣을 수 있게 만들었습니다!
+    public RectTransform targetToShake;
+
+    [Header("Shake Settings (흔들림 설정)")]
     public float shakeDuration = 0.2f;
-    public float shakeStrength = 30f; // UI 픽셀 단위이므로 숫자를 좀 키웠습니다 (30~50 추천)
+    public float shakeStrength = 30f; // UI 기준이므로 30~50 정도의 큰 값을 넣어야 잘 보입니다.
     public int shakeVibrato = 10;
-
-    // 흔들고 싶은 대상 (Canvas 전체 또는 Grid 부모 패널)
-    public RectTransform uiContainerToShake;
-
-    [Header("Floating Text Settings (플로팅 텍스트)")]
-    public GameObject floatingTextPrefab;
-    public RectTransform floatingTextCanvas;
 
     private void Awake()
     {
@@ -42,29 +37,18 @@ public class GameFeelManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    // ★ 카메라 대신 연결된 UI(RectTransform)를 흔듭니다.
-    public void TriggerCameraShake(float intensityMultiplier = 1f)
+    // ★ 지정된 타겟(UI 패널)을 직접 흔듭니다!
+    public void TriggerShake(float intensityMultiplier = 1f)
     {
-        if (uiContainerToShake != null)
+        if (targetToShake != null)
         {
-            uiContainerToShake.DOComplete();
-            // 2D UI에 맞춰 DOShakeAnchorPos 사용
-            uiContainerToShake.DOShakeAnchorPos(shakeDuration, shakeStrength * intensityMultiplier, shakeVibrato);
+            targetToShake.DOComplete();
+            // UI RectTransform 전용 흔들림 함수 (DOShakeAnchorPos)
+            targetToShake.DOShakeAnchorPos(shakeDuration, shakeStrength * intensityMultiplier, shakeVibrato);
         }
-    }
-
-    public void SpawnFloatingText(string textStr, Vector2 spawnPosition)
-    {
-        if (floatingTextPrefab == null || floatingTextCanvas == null) return;
-
-        GameObject textObj = Instantiate(floatingTextPrefab, floatingTextCanvas);
-        RectTransform textRect = textObj.GetComponent<RectTransform>();
-        TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
-
-        tmp.text = textStr;
-        textRect.position = spawnPosition;
-
-        textRect.DOAnchorPosY(textRect.anchoredPosition.y + 100f, 0.7f).SetEase(Ease.OutCirc);
-        tmp.DOFade(0, 0.7f).OnComplete(() => Destroy(textObj));
+        else
+        {
+            Debug.LogWarning("흔들 대상(Target To Shake)이 연결되지 않았습니다!");
+        }
     }
 }
