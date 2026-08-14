@@ -6,6 +6,10 @@ TagManager:
   tags:
   - BlockDestroyTrigger
   - Wall
+  - Wall_Top
+  - Wall_Bottom
+  - Wall_Left
+  - Wall_Right
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Data")]
     public int highScore = 0;
-    private int currentScore = 0;
+    public int currentScore = 0;
 
     [Header("Game Over Settings")]
     public int maxMisses = 10;
@@ -63,6 +63,8 @@ public class UIManager : MonoBehaviour
             startButton.SetActive(false);
             SetSpawnersActive(true);
         }
+
+        if (DeathWallManager.Instance != null) DeathWallManager.Instance.StartGame();
     }
 
     public void AddScore(int amount)
@@ -91,11 +93,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         Debug.Log("게임 오버!");
 
         SetSpawnersActive(false);
+
+        if (DeathWallManager.Instance != null) DeathWallManager.Instance.EndGame();
 
         // ★ Include를 Exclude로 변경! (화면에 살아있는 애들만 지웁니다)
         Person[] allPersons = UnityEngine.Object.FindObjectsByType<Person>(FindObjectsInactive.Exclude);

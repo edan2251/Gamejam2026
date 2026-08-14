@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveAnimationSpawn : MonoBehaviour
@@ -68,6 +69,27 @@ public class WaveAnimationSpawn : MonoBehaviour
             if (front != null)
             {
                 front.Initialize(waveSize);
+
+                // ★ 3단계 (유저님 아이디어): 발사하는 파도의 "정확한 목적지 이름들"을 계산합니다.
+                List<string> targetWallNames = new List<string>();
+                string prefix = "";
+
+                switch (inputData.edge)
+                {
+                    case SpawnEdge.Bottom: prefix = "Top_"; break;
+                    case SpawnEdge.Top: prefix = "Bottom_"; break;
+                    case SpawnEdge.Left: prefix = "Right_"; break;
+                    case SpawnEdge.Right: prefix = "Left_"; break;
+                }
+
+                // 파도가 차지하는 칸(minIdx ~ maxIdx) 만큼 정확한 목적지 이름을 생성 (예: Bottom_1, Bottom_2)
+                for (int i = minIdx; i <= maxIdx; i++)
+                {
+                    targetWallNames.Add(prefix + i.ToString());
+                }
+
+                // WaveFront에게 목적지 리스트를 전달!
+                front.SetTargetWalls(targetWallNames);
             }
         }
     }
