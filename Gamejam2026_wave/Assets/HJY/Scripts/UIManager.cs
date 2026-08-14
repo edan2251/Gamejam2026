@@ -136,11 +136,20 @@ public class UIManager : MonoBehaviour
         {
             tweenController.PlayGameOverTransition(this);
         }
+
+        // ★ 1. BGM 볼륨 낮추기 (Ducking)
+        SoundManager.Instance.DuckBGM();
+
+        // ★ 2. 효과음 재생 후 복구 코루틴 실행
+        StartCoroutine(GameOverSequence());
     }
 
     private void UpdateScoreUI(int gainedAmount)
     {
         if (scoreTxt == null) return;
+
+        float pitch = 1f + (gainedAmount * 0.15f);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.scoreChimeClip, 0.8f, pitch);
 
         // --- 1. 점수가 '촤자작' 올라가는 롤링 애니메이션 ---
         // 1점이면 0.2초, 4~5점이면 최대 0.6초에 걸쳐 타다닥! 하고 올라갑니다.
@@ -205,5 +214,20 @@ public class UIManager : MonoBehaviour
         {
             if (spawner != null) spawner.SetActive(isActive);
         }
+    }
+
+    private System.Collections.IEnumerator GameOverSequence()
+    {
+        // 효과음 재생
+        SoundManager.Instance.PlayGameOverSound();
+
+        // 효과음 길이만큼 대기 (만약 Sizzle 사운드가 2초라면 2초 대기)
+        yield return new WaitForSecondsRealtime(2.0f);
+
+        // ★ 3. BGM 볼륨 복구
+        SoundManager.Instance.RestoreBGM();
+
+        // 이후 남은 오버 연출 실행
+        if (tweenController != null) tweenController.PlayGameOverTransition(this);
     }
 }

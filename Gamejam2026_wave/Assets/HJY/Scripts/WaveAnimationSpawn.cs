@@ -61,6 +61,7 @@ public class WaveAnimationSpawn : MonoBehaviour
 
         // 1. 오브젝트 풀에서 비주얼 파도 애니메이션 생성
         GameObject spawnedWave = WavePoolManager.Instance.SpawnFromPool(waveSize, waveContainer, spawnPosition, spawnRotation);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.waveLaunchClip);
 
         // 2. 파도 안에 숨어있는 WaveFront(히트박스)를 찾아 초기화 전달
         if (spawnedWave != null)

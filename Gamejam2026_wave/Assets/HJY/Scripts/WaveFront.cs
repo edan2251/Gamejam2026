@@ -56,6 +56,11 @@ public class WaveFront : MonoBehaviour
                     {
                         GameFeelManager.Instance.TriggerHitStop();
                     }
+
+                    if (SoundManager.Instance != null)
+                    {
+                        SoundManager.Instance.PlaySFX(SoundManager.Instance.hitImpactClip);
+                    }
                 }
             }
         }

@@ -65,6 +65,8 @@ public class GameFeelManager : MonoBehaviour
             targetToShake.DOComplete();
             targetToShake.DOShakeAnchorPos(shakeDuration, shakeStrength * intensityMultiplier, shakeVibrato)
                          .SetUpdate(true);
+
+            
         }
 
         // 2. 폭발적인 공간 왜곡 (중심점 이동)
@@ -97,6 +99,8 @@ public class GameFeelManager : MonoBehaviour
 
     public void TriggerGameOverFeel()
     {
+        SoundManager.Instance.PlayGameOverSound();
+
         // 1. 일반 타격보다 훨씬 긴 '처절한' 역경직 (0.2초)
         StopAllCoroutines();
         StartCoroutine(GameOverHitStopRoutine());
