@@ -23,6 +23,12 @@ public class GameFeelManager : MonoBehaviour
     public Volume distortionVolume;
     public float distortionDuration = 0.5f; // 여운을 위해 살짝 늘림
 
+    [Header("Game Over Flash Settings")]
+    public UnityEngine.UI.Image flashOverlay; // 배경 캔버스에 넣을 번쩍이는 이미지
+    public float flashInDuration = 0.05f;
+    public float flashOutDuration = 1.0f;
+    public Color flashColor = new Color(1f, 0.9f, 0.7f, 1f); // 태양빛 같은 뜨거운 색
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -87,5 +93,37 @@ public class GameFeelManager : MonoBehaviour
                    .SetUpdate(true)
                    .SetEase(Ease.OutCirc); // OutCirc를 쓰면 초반에 강하게 터지고 부드럽게 가라앉습니다.
         }
+    }
+
+    public void TriggerGameOverFeel()
+    {
+        // 1. 일반 타격보다 훨씬 긴 '처절한' 역경직 (0.2초)
+        StopAllCoroutines();
+        StartCoroutine(GameOverHitStopRoutine());
+
+        // 2. 화면 미친듯이 흔들기 (가중치 2배)
+        TriggerShake(2f, Camera.main != null ? Camera.main.transform.position : Vector3.zero);
+
+        // 3. 눈뽕(플래시) 연출
+        if (flashOverlay != null)
+        {
+            flashOverlay.gameObject.SetActive(true);
+            flashOverlay.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0f); // 투명에서 시작
+
+            // SetUpdate(true)를 넣어야 역경직(시간정지) 중에도 번쩍입니다!
+            flashOverlay.DOFade(flashColor.a, flashInDuration).SetUpdate(true)
+                        .OnComplete(() =>
+                        {
+                            flashOverlay.DOFade(0f, flashOutDuration).SetUpdate(true)
+                                        .OnComplete(() => flashOverlay.gameObject.SetActive(false));
+                        });
+        }
+    }
+
+    private IEnumerator GameOverHitStopRoutine()
+    {
+        Time.timeScale = 0.0f;
+        yield return new WaitForSecondsRealtime(0.2f);
+        Time.timeScale = 1.0f;
     }
 }

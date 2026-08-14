@@ -19,6 +19,7 @@ public class ManaManager : MonoBehaviour
     public float introManaPosY = 260f;
     public float maxManaPosY = -70f;
     public float zeroManaPosY = -2340f;
+    // (바닥으로 떨어지는 deathManaPosY 삭제됨)
 
     [Header("Animation Settings")]
     public float waveTransitionDuration = 0.8f;
@@ -44,14 +45,10 @@ public class ManaManager : MonoBehaviour
 
     void Update()
     {
+        if (waveRect == null) return;
+
         float swayOffset = Mathf.Sin(Time.time * swaySpeed) * swayHeight;
         waveRect.anchoredPosition = new Vector2(waveRect.anchoredPosition.x, currentBaseY + swayOffset);
-
-        //// Test = 스페이스바 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    UseMana();
-        //}
 
         HandleManaRegen();
     }
@@ -89,16 +86,14 @@ public class ManaManager : MonoBehaviour
         }
     }
 
+    // ★ 수정 완료: 바닥으로 떨어지지 않고, 현재 위치에서 Intro 위치로 쭈욱 차오릅니다!
     public void ResetMana()
     {
-        // 마나 최대치로 복구
         currentMana = maxMana;
         regenTimer = 0f;
 
-        // 진행 중이던 애니메이션 정지
         moveTweener?.Kill();
 
-        // 다시 원래 타이틀 화면의 위치(IntroManaPosY)로 부드럽게 복구
         moveTweener = DOTween.To(() => currentBaseY, x => currentBaseY = x, introManaPosY, waveTransitionDuration)
                              .SetEase(Ease.InOutCubic);
     }
@@ -111,10 +106,5 @@ public class ManaManager : MonoBehaviour
         moveTweener?.Kill();
         moveTweener = DOTween.To(() => currentBaseY, x => currentBaseY = x, targetPosY, waveTransitionDuration)
                              .SetEase(Ease.OutCubic);
-
-        if (currentMana <= 0)
-        {
-            //마나 없을때 파도 생성 막기
-        }
     }
 }
