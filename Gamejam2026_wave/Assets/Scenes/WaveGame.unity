@@ -1204,7 +1204,7 @@ MonoBehaviour:
   tweenController: {fileID: 806036880}
   manaManager: {fileID: 1579691477}
   highScore: 99
-  maxMisses: 10
+  maxMisses: 1
   personSpawners:
   - {fileID: 797916671}
   - {fileID: 1557606168}
@@ -4421,6 +4421,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441953009}
   m_CullTransparentMesh: 1
+--- !u!1 &1448900529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1448900531}
+  - component: {fileID: 1448900530}
+  m_Layer: 0
+  m_Name: GameFeelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1448900530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448900529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a39f211391d03e47a7fbd90bdfe4f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameFeelManager
+  hitStopDuration: 0.05
+  shakeDuration: 0.2
+  shakeStrength: 10
+  shakeVibrato: 10
+  uiContainerToShake: {fileID: 0}
+  floatingTextPrefab: {fileID: 0}
+  floatingTextCanvas: {fileID: 0}
+--- !u!4 &1448900531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448900529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 286.40277, y: 697.5054, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455306880
 GameObject:
   m_ObjectHideFlags: 0
@@ -6156,3 +6207,4 @@ SceneRoots:
   - {fileID: 59756126}
   - {fileID: 1939751761}
   - {fileID: 40546494}
+  - {fileID: 1448900531}

@@ -97,21 +97,22 @@ public class UIManager : MonoBehaviour
 
         SetSpawnersActive(false);
 
-        Person[] allPersons = UnityEngine.Object.FindObjectsByType<Person>(FindObjectsInactive.Include);
+        // ★ Include를 Exclude로 변경! (화면에 살아있는 애들만 지웁니다)
+        Person[] allPersons = UnityEngine.Object.FindObjectsByType<Person>(FindObjectsInactive.Exclude);
         foreach (Person p in allPersons) Destroy(p.gameObject);
 
-        WaveFront[] allWaves = UnityEngine.Object.FindObjectsByType<WaveFront>(FindObjectsInactive.Include);
+        // ★ 풀(Pool)에서 대기 중인 파도는 건드리지 않도록 Exclude 적용!
+        WaveFront[] allWaves = UnityEngine.Object.FindObjectsByType<WaveFront>(FindObjectsInactive.Exclude);
         foreach (WaveFront w in allWaves)
         {
             if (w.transform.parent != null) Destroy(w.transform.parent.gameObject);
             else Destroy(w.gameObject);
         }
 
-        // ★ 3. 화면에 흩어져 있는 쩜쩜쩜(PathDot)들도 모조리 찾아서 파괴!
-        PathDot[] allDots = UnityEngine.Object.FindObjectsByType<PathDot>(FindObjectsInactive.Include);
+        // 쩜쩜쩜(PathDot)도 Exclude로 통일하는 것이 성능에 좋습니다.
+        PathDot[] allDots = UnityEngine.Object.FindObjectsByType<PathDot>(FindObjectsInactive.Exclude);
         foreach (PathDot d in allDots) Destroy(d.gameObject);
 
-        // 2번 문제 해결을 위해 마나 UI를 초기 위치로 되돌리는 함수 호출
         if (manaManager != null)
         {
             manaManager.ResetMana();

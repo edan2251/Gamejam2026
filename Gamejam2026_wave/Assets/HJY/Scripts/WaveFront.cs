@@ -22,30 +22,32 @@ public class WaveFront : MonoBehaviour
     {
         if (myRectTransform == null) return;
 
-        // 1. 내 파도 히트박스의 실제 화면 상 영역(사각형)을 구합니다.
         Rect myRect = GetWorldRect(myRectTransform);
 
-        // 2. 현재 화면에 살아있는 모든 사람을 순회하며 검사합니다. (역순으로 순회하여 중간 삭제 에러 방지)
         for (int i = Person.ActivePersons.Count - 1; i >= 0; i--)
         {
             Person person = Person.ActivePersons[i];
 
             if (person == null) continue;
 
-            // 아직 안 쓸려간 사람인지 확인
             if (person.currentState == PersonState.Moving && !sweptPersons.Contains(person))
             {
-                // 3. 사람의 실제 화면 상 영역(사각형)을 구합니다.
                 Rect personRect = GetWorldRect(person.rectTransform);
 
-                // 4. 두 사각형이 겹쳤는지 교집합(Overlaps) 검사!
                 if (myRect.Overlaps(personRect))
                 {
                     person.HitByWave();
                     person.transform.SetParent(this.transform);
                     sweptPersons.Add(person);
 
-                    Debug.Log($"[{gameObject.name}] UI 좌표 충돌 감지! {person.gameObject.name} 휩쓸림.");
+                    // ★ [타격감 연출 1 & 2] 역경직과 플로팅 텍스트 발생!
+                    if (GameFeelManager.Instance != null)
+                    {
+                        GameFeelManager.Instance.TriggerHitStop();
+
+                        // 현재까지 모은 콤보 수치로 텍스트 띄우기 (예: "1 Combo!", "2 Combo!")
+                        GameFeelManager.Instance.SpawnFloatingText($"+{sweptPersons.Count}", person.transform.position);
+                    }
                 }
             }
         }
@@ -79,10 +81,13 @@ public class WaveFront : MonoBehaviour
 
         if (scoreGained > 0)
         {
-            Debug.Log($"파도 연출 종료! 득점: +{scoreGained}명 밀어냄");
-            if (UIManager.Instance != null)
+            if (UIManager.Instance != null) UIManager.Instance.AddScore(scoreGained);
+
+            // ★ [타격감 연출 3] 파도가 끝날 때 점수를 정산하며 카메라 흔들기!
+            // 많이 쓸어담았을수록 화면이 더 강하게 흔들립니다 (scoreGained * 0.3f)
+            if (GameFeelManager.Instance != null)
             {
-                UIManager.Instance.AddScore(scoreGained);
+                GameFeelManager.Instance.TriggerCameraShake(1f + (scoreGained * 0.3f));
             }
         }
 

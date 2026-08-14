@@ -22,9 +22,21 @@ public class PersonSpawner : MonoBehaviour
     [Header("Direction")]
     [SerializeField] private SpawnDirection spawnDirection;
 
-    private void Start()
+    private Coroutine spawnCoroutine;
+
+    // 오브젝트가 켜질 때마다 코루틴 재시작!
+    private void OnEnable()
     {
-        StartCoroutine(SpawnRoutine());
+        spawnCoroutine = StartCoroutine(SpawnRoutine());
+    }
+
+    // 오브젝트가 꺼질 때 코루틴 안전하게 정지!
+    private void OnDisable()
+    {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
     }
 
     private IEnumerator SpawnRoutine()
