@@ -481,26 +481,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PersonSpawnManager
   stages:
   - startTime: 0
-    minSpawnInterval: 4
-    maxSpawnInterval: 10
+    minSpawnInterval: 2
+    maxSpawnInterval: 4
+    minActivePersons: 1
+    maxActivePersons: 1
     persons:
     - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
       spawnWeight: 1
-  - startTime: 11
-    minSpawnInterval: 4
-    maxSpawnInterval: 8
+  - startTime: 12
+    minSpawnInterval: 2
+    maxSpawnInterval: 3
+    minActivePersons: 1
+    maxActivePersons: 2
     persons:
     - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
       spawnWeight: 1
   - startTime: 20
-    minSpawnInterval: 3
-    maxSpawnInterval: 8
+    minSpawnInterval: 1.7
+    maxSpawnInterval: 2.5
+    minActivePersons: 1
+    maxActivePersons: 3
     persons:
     - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
       spawnWeight: 1
-  - startTime: 30
-    minSpawnInterval: 3
-    maxSpawnInterval: 7
+  - startTime: 28
+    minSpawnInterval: 1.7
+    maxSpawnInterval: 2.5
+    minActivePersons: 2
+    maxActivePersons: 3
+    persons:
+    - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
+      spawnWeight: 1
+  - startTime: 40
+    minSpawnInterval: 1.5
+    maxSpawnInterval: 2
+    minActivePersons: 2
+    maxActivePersons: 5
+    persons:
+    - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
+      spawnWeight: 1
+  - startTime: 50
+    minSpawnInterval: 1
+    maxSpawnInterval: 1.5
+    minActivePersons: 2
+    maxActivePersons: 6
     persons:
     - personPrefab: {fileID: 6123373971083255720, guid: a4784674c5a09c146ad2b03afc0ac42d, type: 3}
       spawnWeight: 1
@@ -3541,14 +3565,18 @@ MonoBehaviour:
   difficultyStages:
   - targetScore: 0
     wallCount: 0
-  - targetScore: 3
+  - targetScore: 4
     wallCount: 1
   - targetScore: 10
     wallCount: 2
-  - targetScore: 25
+  - targetScore: 22
     wallCount: 3
-  - targetScore: 38
+  - targetScore: 45
     wallCount: 4
+  - targetScore: 60
+    wallCount: 5
+  - targetScore: 75
+    wallCount: 6
   delayBeforeTransition: 0.5
   scaleOutDuration: 0.3
   scaleInDuration: 0.1

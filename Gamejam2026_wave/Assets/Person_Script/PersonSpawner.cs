@@ -11,6 +11,9 @@ public class PersonSpawner : MonoBehaviour
     [SerializeField] private PersonSpawnManager spawnManager;
 
     [Header("UI Spawn Settings")]
+    [Tooltip("게임 시작 후 최초 스폰까지의 대기 시간")]
+    [SerializeField] private float initialDelay = 3f; // ★ 추가됨: 처음 5초간 꿀같은 휴식!
+
     [Tooltip("사람들이 생성될 부모 캔버스 패널")]
     [SerializeField] private RectTransform personContainer;
     [SerializeField] private RectTransform spawnPoint; // 스폰 기준점이 될 UI 객체
@@ -41,11 +44,18 @@ public class PersonSpawner : MonoBehaviour
 
     private IEnumerator SpawnRoutine()
     {
+        // ★ 핵심: 코루틴이 시작되자마자 설정된 시간(기본 5초)만큼 무조건 아무것도 안 하고 대기합니다.
+        yield return new WaitForSeconds(initialDelay);
+
         while (true)
         {
             float spawnTime = spawnManager.GetRandomSpawnInterval();
             yield return new WaitForSeconds(spawnTime);
-            SpawnPerson();
+
+            if (spawnManager.CanSpawn())
+            {
+                SpawnPerson();
+            }
         }
     }
 
